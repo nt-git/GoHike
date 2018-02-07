@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    
+
+<!-- Create a div for every Trail using a Jinja for loop -->
+<div class='trail-div'>
+    {% for i in range(number) %}
+
+        <b> Name: <a href= "">{{ num_results[i].get('name') }}</a><b><br>
+        <b> URL: <a href= "">{{ num_results[i].get('url') }}</a> <b><br>
+        <b> Location: {{ num_results[i].get('location') }} <b><br>
+        <b> Summary: {{ num_results[i].get('summary') }} <b><br><br>
+        <b> Image: <img src="{{ num_results[i].get('imgSqSmall') }}" ><br>  
+
+    {% endfor %}
+ </div>  
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+  "use strict";
+
+
+
+</script>
+
+
+{% endblock %}

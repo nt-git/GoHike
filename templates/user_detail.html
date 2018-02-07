@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<h2>User Details</h2>
+  <h3>Age: {{user.name}}</h3>
+  <h3>Zipcode: {{ user.zipcode }}</h3>
+  <h3>Email: {{ user.email }}</h3>
+  
+  <h2>My Trail List</h2>
+    {% if user.usertrails|length == 0 %}
+    <h4>No Trails visited yet.</h4>
+    {% else %}
+      <ul>
+        {% for usertrail in user.usertrails %}
+          <li>
+            {{usertrail.trail.name}}<br>
+            {{usertrail.trail.url}}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Search Form</h2>
+
+<form action="/search", method="POST">
+    <div>
+        <input type="text" name="zipcode" placeholder="Enter your zipcode here">
+    </div>
+    <div>
+        <input type="number" name="trail_num" step="10" min="10" max="100">
+    </div>
+    
+    <input type="submit" value="Find Trails">
+</form>
+
+{% endblock %}
+

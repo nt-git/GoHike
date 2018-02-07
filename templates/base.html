@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <title>My_Trail</title>
+</head>
+
+<body>
+  <h4>
+    <a href="/">My Trail</a>
+    <span class="logout" style="float:right">
+        {%if "id" not in session %}
+            <a href="/login">Login</a>
+        {% else %}
+            <a href="/logout">Logout</a>
+        {% endif%}
+    </span>
+  </h4>
+  <hr>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {% endwith %}
+
+  {% block content %} put your content here {% endblock %}
+
+</body>
+</html>
