@@ -57,7 +57,8 @@ def user_sign_in():
     else:
         session['id'] = query_user.user_id
         flash("Login successful!")
-        return redirect("/user")
+        return redirect("/users/" + str(query_user.user_id))
+
 
 
 @app.route('/SignUp', methods=["GET"])
@@ -79,7 +80,7 @@ def user_sign_up():
 
     if users_emails:
         flash("User already exists!")
-        return redirect('/sign-up')
+        return redirect('/SignUp')
     else:
         new_user = User(email=email, password=password, zipcode=zipcode, name=name)
         db.session.add(new_user)
@@ -114,7 +115,7 @@ def user_search_trails():
     url_lng = str(g.lng)
 
     url_maxResults = request.form.get("trail_num")
-   
+
     #send request with above lat and long
     r = requests.get("https://www.hikingproject.com/data/get-trails?lat="+url_lat+"&lon="+url_lng+"&maxDistance=10&maxResults="+url_maxResults+"&key="+hiking_consumer_key)
     trail = r.json()
@@ -124,6 +125,35 @@ def user_search_trails():
     #print num_results
 
     return render_template("search_results.html", dict=trail, num_results=num_results, number=number)
+
+
+@app.route("/get-trails-info", methods=["POST"])
+def get_trail_info_add_to_db():
+    """Get Trail info from front end when user selects and stores in DB"""
+
+    trail_id = request.form.get("trail_id")
+    date = request.form.get("date")
+    user_id = session['id']
+
+    print trail_id
+    print date
+    print user_id 
+
+    #Add this record in Trail, UserTrails and Hike Table
+
+    return render_template("homepage.html")
+
+
+
+@app.route("/logout")
+def user_logout():
+    """ Logout User and Redirect to Homepage """
+
+    if session:
+        session.clear()
+
+    return redirect('/')
+
 
 
 if __name__ == "__main__":

@@ -6,7 +6,14 @@
 <div class='trail-div'>
     {% for i in range(number) %}
 
-        <b> Name: <a href= "">{{ num_results[i].get('name') }}</a><b> <br> add a button "Hike It" with class , data attribute 
+        <b> Name: <a href= "">{{ num_results[i].get('name') }}</a><b> 
+        <span class="hikeit-span">
+            <button id="hike-it" data-tooltip={{ num_results[i].get('id') }}>Hike It</button>
+        </span>
+        <span class="date-span">
+            Enter Date: <input type="date" name="date" id="date=time">
+        </span><br>
+        
         <b> URL: <a href= "">{{ num_results[i].get('url') }}</a> <b><br>
         <b> Location: {{ num_results[i].get('location') }} <b><br>
         <b> Summary: {{ num_results[i].get('summary') }} <b><br><br>
@@ -19,9 +26,22 @@
 <script>
   "use strict";
 
-  add a event listener with click on that button, have a callback function to do operation on that hike , data attribute on that button with id 
 
-  ajax call with trail_id
+  function getInfo(evt){
+    evt.preventDefault();
+
+    var formInputs = {
+        "trail_id": $(this).data('tooltip'),
+        "date": $("#date-time").val(),
+    };
+    
+    $.post("/get-trails-info",formInputs);
+  }
+
+  $("#hike-it").on('click', getInfo);
+
+
+
 
 </script>
 
