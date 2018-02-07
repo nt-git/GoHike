@@ -113,10 +113,10 @@ def user_search_trails():
     url_lat = str(g.lat)
     url_lng = str(g.lng)
 
-    url_maxDistance = request.form.get("trail_num")
-    print url_maxDistance
+    url_maxResults = request.form.get("trail_num")
+   
     #send request with above lat and long
-    r = requests.get("https://www.hikingproject.com/data/get-trails?lat="+url_lat+"&lon="+url_lng+"&maxDistance="+url_maxDistance+"&key="+hiking_consumer_key)
+    r = requests.get("https://www.hikingproject.com/data/get-trails?lat="+url_lat+"&lon="+url_lng+"&maxDistance=10&maxResults="+url_maxResults+"&key="+hiking_consumer_key)
     trail = r.json()
     print trail
     num_results = trail['trails']
