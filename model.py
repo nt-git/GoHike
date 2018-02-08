@@ -40,8 +40,8 @@ class Trail(db.Model):
     trail_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
     url = db.Column(db.String(200), nullable=False)
-    condition = db.Column(db.String(200), nullable=True)
-    #length = db.Column(db.Integer, nullable=True)
+    #condition = db.Column(db.String(200), nullable=True)
+    length = db.Column(db.Float, nullable=True)
     trail_type = db.Column(db.String(200), nullable=True)
 
     def __repr__(self):
@@ -50,7 +50,7 @@ class Trail(db.Model):
         return "<Trail trail_id={} name={}>".format(self.trail_id, self.name)
 
 
-class UserTrails(db.Model):
+class UserTrail(db.Model):
     """UserTrail model."""
 
     __tablename__ = "usertrails"
@@ -58,7 +58,7 @@ class UserTrails(db.Model):
     usertrail_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     trail_id = db.Column(db.Integer, db.ForeignKey("trails.trail_id"), nullable=False)
-    rating = db.Column(db.Integer, nullable=False)
+    rating = db.Column(db.Integer, nullable=True)
 
     user = db.relationship("User", backref=db.backref("usertrails", order_by=usertrail_id))
     trail = db.relationship("Trail", backref=db.backref("usertrails", order_by=usertrail_id))
@@ -69,17 +69,17 @@ class UserTrails(db.Model):
         return "<UserTrails user_trail_id={}  rating={}>".format(self.usertrail_id, self.rating)
 
 
-class Hikes(db.Model):
+class Hike(db.Model):
     """Hike Model."""
 
     __tablename__ = "hikes"
 
     hike_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    usertrail_id = db.Column(db.Integer, db.ForeignKey("usertrails.usertrail_id"), nullable=False)
     date = db.Column(db.DateTime, nullable=True)
     comments = db.Column(db.String(500), nullable=True)
 
-    user = db.relationship("User", backref=db.backref("hikes", order_by=hike_id))
+    usertrail = db.relationship("UserTrail", backref=db.backref("hikes", order_by=hike_id))
 
     def __repr__(self):
         """Provide helpful representation about a hike when printed."""
@@ -127,7 +127,6 @@ class Friendship(db.Model):
     friend_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user1_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     user2_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
-
 
     def __repr__(self):
         """Provide helpful representation about a friend when printed."""

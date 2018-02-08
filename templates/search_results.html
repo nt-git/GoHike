@@ -9,7 +9,7 @@
         <b> Name: {{ num_results[i].get('name') }} </b>
 
         <span class="hikeit-span">
-            <button id="hike-it" data-tooltip="{{ num_results[i].get('id') }}" data-name="{{ num_results[i].get('name') }}" data-url="{{ num_results[i].get('url') }}">Hike It</button>
+            <button id="hike-it" data-tooltip="{{ num_results[i].get('id') }}" data-name="{{ num_results[i].get('name') }}" data-url="{{ num_results[i].get('url') }}" data-length="{{ num_results[i].get('length') }}" data-type="{{ num_results[i].get('type') }}" data-star="{{ num_results[i].get('stars') }}">Hike It</button>
             Enter Date: <input type="date" name="date" id="date-time">
         </span><br>
         
@@ -38,7 +38,10 @@
         "trail_id": $(this).data('tooltip'),
         "date": datevalue,
         "name": $(this).data('name'),
-        "url" : $(this).data('url')
+        "url" : $(this).data('url'),
+        "length": $(this).data('length'),
+        "type" : $(this).data('type'),
+        "stars": $(this).data('stars')
     };
 
     

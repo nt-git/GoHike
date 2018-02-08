@@ -6,7 +6,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import User, Trail, UserTrails, Hikes, connect_to_db, db
+from model import User, Trail, UserTrail, Hike, connect_to_db, db
 
 import geocoder
 import requests
@@ -49,7 +49,7 @@ def user_sign_in():
 
     if not query_user:
         flash("That email isn't in our system.  It looks like you need to sign up!")
-        return redirect("/sign-up")
+        return redirect("/SignUp")
 
     if query_user.password != password:
         flash("Incorrect password, please try signing in again")
@@ -87,7 +87,7 @@ def user_sign_up():
         db.session.commit()
 
         flash("Registered successfully!")
-        return redirect('/user')
+        return redirect('/SignUp')
 
 
 @app.route("/users/<u_id>")
@@ -136,19 +136,26 @@ def get_trail_info_add_to_db():
     user_id = session['id']
     name = request.form.get("name")
     url = request.form.get("url")
+    length = request.form.get("length")
+    trail_type = request.form.get("type")
+    rating = request.form.get("stars")
 
     #Add this record in Trail, UserTrails and Hike Table
     #Need to check if this record already exists in Trails then don't add it in Trails
 
-    trail = Trail(trail_id=trail_id, name=name, url=url, trail_type="Featured Hike")
+    trail = Trail(trail_id=trail_id, name=name, url=url, length=length, trail_type=trail_type)
     db.session.add(trail)
     db.session.commit()
 
-    usertrails = UserTrails(trail_id=trail_id, user_id=user_id, rating=4)
+    usertrails = UserTrail(trail_id=trail_id, user_id=user_id, rating=rating)
     db.session.add(usertrails)
     db.session.commit()
 
-    hike = Hikes(user_id=user_id, date=date, comments="Very Nice")
+    #query = db.session.query('UserTrail')
+    #usertrail_id_query = query.filter(UserTrail.user_id == user_id).first()
+    usertrail_id = usertrails.usertrail_id
+
+    hike = Hike(usertrail_id=usertrail_id, date=date, comments="Very Nice")
     db.session.add(hike)
     db.session.commit()
 

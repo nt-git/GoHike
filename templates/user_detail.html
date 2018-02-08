@@ -24,19 +24,22 @@
 
 
     <h2>My Hike List</h2>
-    {% if user.hikes|length == 0 %}
+    {% if user.usertrails|length == 0 %}
     <h4>No Hikes yet.</h4>
     {% else %}
       <ul>
-        {% for hike in user.hikes %}
-          <li>
-            {{hike.user.email}}<br>
-            {{hike.date}}<br>
-            {{hike.user.usertrail.trail.name}}
-          </li>
-        {% endfor %}
+        {% for usertrail in user.usertrails %}
+        <li>
+            {{usertrail.user.email}}<br>
+            {% for hike in usertrail.hikes %}
+                {{hike.date}}
+            {% endfor %}
+            {{usertrail.trail.name}}
+        </li>
+         {% endfor %}
       </ul>
     {% endif %}
+
 
 {% endblock %}
 
