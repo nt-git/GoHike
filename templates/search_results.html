@@ -6,12 +6,11 @@
 <div class='trail-div'>
     {% for i in range(number) %}
 
-        <b> Name: <a href= "">{{ num_results[i].get('name') }}</a><b> 
+        <b> Name: {{ num_results[i].get('name') }} </b>
+
         <span class="hikeit-span">
-            <button id="hike-it" data-tooltip={{ num_results[i].get('id') }}>Hike It</button>
-        </span>
-        <span class="date-span">
-            Enter Date: <input type="date" name="date" id="date=time">
+            <button id="hike-it" data-tooltip="{{ num_results[i].get('id') }}" data-name="{{ num_results[i].get('name') }}" data-url="{{ num_results[i].get('url') }}">Hike It</button>
+            Enter Date: <input type="date" name="date" id="date-time">
         </span><br>
         
         <b> URL: <a href= "">{{ num_results[i].get('url') }}</a> <b><br>
@@ -26,21 +25,35 @@
 <script>
   "use strict";
 
+  function showInfo(results){
+    
+  }
 
   function getInfo(evt){
     evt.preventDefault();
+    console.log("hello")
+
+    let datevalue = $(this).next().val()
+    
+
+    console.log(datevalue)
+    console.log($(this).data('name'))
+    console.log($(this).data('url'))
+
 
     var formInputs = {
         "trail_id": $(this).data('tooltip'),
-        "date": $("#date-time").val(),
+        "date": datevalue,
+        "name": $(this).data('name'),
+        "url" : $(this).data('url')
     };
+
     
-    $.post("/get-trails-info",formInputs);
+    
+    $.post("/get-trails-info",formInputs, showInfo);
   }
 
-  $("#hike-it").on('click', getInfo);
-
-
+  $("#hike-it ").on('click', getInfo);
 
 
 </script>

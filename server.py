@@ -6,7 +6,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import User, Trail, connect_to_db, db
+from model import User, Trail, UserTrails, Hikes, connect_to_db, db
 
 import geocoder
 import requests
@@ -94,7 +94,7 @@ def user_sign_up():
 def user_profile(u_id):
     """Shows details about a specific user."""
 
-    user = User.query.options(db.joinedload('usertrails','trail')).get(u_id)
+    user = User.query.options(db.joinedload('usertrails', 'trail')).get(u_id)
 
     return render_template("user_detail.html", user=user)
 
@@ -134,12 +134,23 @@ def get_trail_info_add_to_db():
     trail_id = request.form.get("trail_id")
     date = request.form.get("date")
     user_id = session['id']
-
-    print trail_id
-    print date
-    print user_id 
+    name = request.form.get("name")
+    url = request.form.get("url")
 
     #Add this record in Trail, UserTrails and Hike Table
+
+    trail = Trail(trail_id=trail_id, name=name, url=url, trail_type="Featured Hike")
+    db.session.add(trail)
+    db.session.commit()
+
+    usertrails = UserTrails(trail_id=trail_id, user_id=user_id, rating=4)
+    db.session.add(usertrails)
+    db.session.commit()
+
+    hike = Hikes(user_id=user_id, date=date, comments="Very Nice")
+    db.session.add(hike)
+    db.session.commit()
+
 
     return render_template("homepage.html")
 

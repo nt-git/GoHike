@@ -41,6 +41,7 @@ class Trail(db.Model):
     name = db.Column(db.String(200), nullable=False)
     url = db.Column(db.String(200), nullable=False)
     condition = db.Column(db.String(200), nullable=True)
+    #length = db.Column(db.Integer, nullable=True)
     trail_type = db.Column(db.String(200), nullable=True)
 
     def __repr__(self):
