@@ -138,6 +138,7 @@ def get_trail_info_add_to_db():
     url = request.form.get("url")
 
     #Add this record in Trail, UserTrails and Hike Table
+    #Need to check if this record already exists in Trails then don't add it in Trails
 
     trail = Trail(trail_id=trail_id, name=name, url=url, trail_type="Featured Hike")
     db.session.add(trail)
@@ -151,9 +152,7 @@ def get_trail_info_add_to_db():
     db.session.add(hike)
     db.session.commit()
 
-
     return render_template("homepage.html")
-
 
 
 @app.route("/logout")
@@ -164,7 +163,6 @@ def user_logout():
         session.clear()
 
     return redirect('/')
-
 
 
 if __name__ == "__main__":

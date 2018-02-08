@@ -31,16 +31,9 @@
 
   function getInfo(evt){
     evt.preventDefault();
-    console.log("hello")
 
     let datevalue = $(this).next().val()
     
-
-    console.log(datevalue)
-    console.log($(this).data('name'))
-    console.log($(this).data('url'))
-
-
     var formInputs = {
         "trail_id": $(this).data('tooltip'),
         "date": datevalue,
@@ -48,7 +41,6 @@
         "url" : $(this).data('url')
     };
 
-    
     
     $.post("/get-trails-info",formInputs, showInfo);
   }
