@@ -3,6 +3,10 @@
 
 <h2>Search Form</h2>
 
+{%if "id" not in session %}
+        <a href="/SignIn"> You are not Signed In. Please Sign In to search your trails</a>
+
+{% else %}
 <form action="/search", method="POST">
     <div>
         <input type="text" name="zipcode" placeholder="Enter your zipcode here">
@@ -13,6 +17,8 @@
     
     <input type="submit" value="Find Trails">
 </form>
+
+{% endif %}
 
 {% endblock %}
 
