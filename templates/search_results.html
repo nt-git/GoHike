@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
+
     
 
 <!-- Create a div for every Trail using a Jinja for loop -->
 <div class='trail-div'>
     {% for i in range(number) %}
 
-        <b> Name: {{ num_results[i].get('name') }} </b>
+        <b> i) Name: {{ num_results[i].get('name') }} </b>
 
         <span class="hikeit-span">
             <button id="hike-it" data-tooltip="{{ num_results[i].get('id') }}" data-name="{{ num_results[i].get('name') }}" data-url="{{ num_results[i].get('url') }}" data-length="{{ num_results[i].get('length') }}" data-type="{{ num_results[i].get('type') }}" data-star="{{ num_results[i].get('stars') }}">Hike It</button>
@@ -16,10 +17,67 @@
         <b> URL: <a href= "">{{ num_results[i].get('url') }}</a> <b><br>
         <b> Location: {{ num_results[i].get('location') }} <b><br>
         <b> Summary: {{ num_results[i].get('summary') }} <b><br><br>
-        <b> Image: <img src="{{ num_results[i].get('imgSqSmall') }}" ><br>  
+        <b> Image: <img src="{{ num_results[i].get('imgSqSmall') }}" ><br><br>
+
+         {% for usertrail in user.usertrails %}
+            {% if usertrail.trail.name == num_results[i].get('name')  %}
+                <h4>You have already visited this trail<h4>
+            {% endif %}
+        {% endfor %} 
 
     {% endfor %}
  </div>  
+
+ <head>
+    <title>Geocoding service</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 500px;
+        width: 800px;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        
+        var myLatLng = {lat: {{lat}}, lng: {{lng}} };
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 8,
+          center: myLatLng
+        });
+
+
+        {% for i in range(number) %}
+
+        var i = new google.maps.LatLng({{ num_results[i].get('latitude') }}, {{ num_results[i].get('longitude') }});
+        var marker = new google.maps.Marker({
+        position: i,
+        map: map,
+        title: '{{ num_results[i].get('name') }}'
+        });
+
+        {% endfor %}
+
+      }
+
+
+    </script>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeD1vIu0C2hIMeiLWDD0_4L28Mj8A4YyM&callback=initMap">
+    </script>
+
+
+  </body>
+
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>

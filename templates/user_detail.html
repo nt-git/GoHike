@@ -4,26 +4,36 @@
 
 
 <h2>User Details</h2>
-  <h3>Age: {{user.name}}</h3>
+  <h3>Name: {{user.name}}</h3>
   <h3>Zipcode: {{ user.zipcode }}</h3>
   <h3>Email: {{ user.email }}</h3>
   
   <h2>My Trail List</h2>
+  <div class='trail-div'>
     {% if user.usertrails|length == 0 %}
     <h4>No Trails visited yet.</h4>
     {% else %}
       <ul>
         {% for usertrail in user.usertrails %}
           <li>
-            {{usertrail.trail.name}}<br>
+            {{usertrail.trail.name}}<br> 
             {{usertrail.trail.url}}
+
+            {% if usertrail.trail.trailattrs|length == 0 %}
+            <span class="comment-span">
+            <button id="comment-it" data-trail-id="{{ usertrail.trail.trail_id }}">Add Your Comments</button>
+           </span><br>
+           {% endif %}
+
           </li>
         {% endfor %}
       </ul>
     {% endif %}
+  </div>
 
 
     <h2>My Hike List</h2>
+ <div class='hike-div'>
     {% if user.usertrails|length == 0 %}
     <h4>No Hikes yet.</h4>
     {% else %}
@@ -39,7 +49,31 @@
          {% endfor %}
       </ul>
     {% endif %}
-
+ </div>
 
 {% endblock %}
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+  "use strict";
+
+  function showInfo(results){
+    
+  }
+
+  function getInfo(evt){
+    evt.preventDefault();
+    
+    var formInputs = {
+        "trail_id": $(this).data('trail-id'),
+    };
+
+    
+    $.post("/get-trails-comment",formInputs, showInfo);
+  }
+
+  $("#comment-it ").on('click', getInfo);
+
 

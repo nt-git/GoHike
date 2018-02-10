@@ -11,6 +11,7 @@ from model import User, Trail, UserTrail, Hike, connect_to_db, db
 import geocoder
 import requests
 import os
+import datetime
 
 
 app = Flask(__name__)
@@ -60,7 +61,6 @@ def user_sign_in():
         return redirect("/users/" + str(query_user.user_id))
 
 
-
 @app.route('/SignUp', methods=["GET"])
 def sign_up():
     """Sign Up page"""
@@ -87,7 +87,7 @@ def user_sign_up():
         db.session.commit()
 
         flash("Registered successfully!")
-        return redirect('/SignUp')
+        return redirect('/search')
 
 
 @app.route("/users/<u_id>")
@@ -110,9 +110,15 @@ def user_search_trails():
     """Display search results"""
 
     zipcode = request.form.get("zipcode")
-    g = geocoder.google(str(zipcode))
-    url_lat = str(g.lat)
-    url_lng = str(g.lng)
+    location = request.form.get("location")
+    if zipcode:
+        g = geocoder.google(str(zipcode))
+        url_lat = str(g.lat)
+        url_lng = str(g.lng)
+    else:
+        g = geocoder.google(str(location))
+        url_lat = str(g.lat)
+        url_lng = str(g.lng)
 
     url_maxResults = request.form.get("trail_num")
 
@@ -124,7 +130,10 @@ def user_search_trails():
     number = len(num_results)
     #print num_results
 
-    return render_template("search_results.html", dict=trail, num_results=num_results, number=number)
+    user_id = session['id']
+    user = User.query.options(db.joinedload('usertrails', 'trail')).get(user_id)
+
+    return render_template("search_results.html", dict=trail, num_results=num_results, number=number, lat=url_lat, lng=url_lng, user=user)
 
 
 @app.route("/get-trails-info", methods=["POST"])
@@ -143,18 +152,21 @@ def get_trail_info_add_to_db():
     #Add this record in Trail, UserTrails and Hike Table
     #Need to check if this record already exists in Trails then don't add it in Trails
 
-    trail = Trail(trail_id=trail_id, name=name, url=url, length=length, trail_type=trail_type)
-    db.session.add(trail)
-    db.session.commit()
+    query = db.session.query(Trail)
+    users_trails = query.filter(Trail.trail_id == trail_id).all()
+
+    if not users_trails:
+        trail = Trail(trail_id=trail_id, name=name, url=url, length=length, trail_type=trail_type)
+        db.session.add(trail)
+        db.session.commit()
 
     usertrails = UserTrail(trail_id=trail_id, user_id=user_id, rating=rating)
     db.session.add(usertrails)
     db.session.commit()
 
-    #query = db.session.query('UserTrail')
-    #usertrail_id_query = query.filter(UserTrail.user_id == user_id).first()
     usertrail_id = usertrails.usertrail_id
 
+    #date = datetime.strptime(date, '%Y-%d-%m')
     hike = Hike(usertrail_id=usertrail_id, date=date, comments="Very Nice")
     db.session.add(hike)
     db.session.commit()
