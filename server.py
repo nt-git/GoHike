@@ -95,6 +95,7 @@ def user_profile(u_id):
     """Shows details about a specific user."""
 
     user = User.query.options(db.joinedload('usertrails', 'trail')).get(u_id)
+    #user_trails_visited = 
 
     return render_template("user_detail.html", user=user)
 
@@ -170,6 +171,15 @@ def get_trail_info_add_to_db():
     hike = Hike(usertrail_id=usertrail_id, date=date, comments="Very Nice")
     db.session.add(hike)
     db.session.commit()
+
+    return render_template("homepage.html")
+
+
+@app.route("/get-trails-comment", methods=["POST"])
+def get_trail_comment_add_to_db():
+    """Get Trail info from front end when user selects and stores in Attr Table"""
+
+    trail_id = request.form.get("trail_id")
 
     return render_template("homepage.html")
 

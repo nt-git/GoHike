@@ -7,7 +7,7 @@
 <div class='trail-div'>
     {% for i in range(number) %}
 
-        <b> i) Name: {{ num_results[i].get('name') }} </b>
+        <b>  Name: {{ num_results[i].get('name') }} </b>
 
         <span class="hikeit-span">
             <button id="hike-it" data-tooltip="{{ num_results[i].get('id') }}" data-name="{{ num_results[i].get('name') }}" data-url="{{ num_results[i].get('url') }}" data-length="{{ num_results[i].get('length') }}" data-type="{{ num_results[i].get('type') }}" data-star="{{ num_results[i].get('stars') }}">Hike It</button>

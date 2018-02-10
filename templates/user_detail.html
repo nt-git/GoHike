@@ -17,7 +17,7 @@
         {% for usertrail in user.usertrails %}
           <li>
             {{usertrail.trail.name}}<br> 
-            {{usertrail.trail.url}}
+            <a href= "">{{usertrail.trail.url}}</a>
 
             {% if usertrail.trail.trailattrs|length == 0 %}
             <span class="comment-span">
@@ -40,7 +40,7 @@
       <ul>
         {% for usertrail in user.usertrails %}
         <li>
-            {{usertrail.user.email}}<br>
+            
             {% for hike in usertrail.hikes %}
                 {{hike.date}}
             {% endfor %}
@@ -54,12 +54,12 @@
 {% endblock %}
 
 
-
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
   "use strict";
 
   function showInfo(results){
+    console.log("hi")
     
   }
 
