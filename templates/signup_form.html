@@ -1,22 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>SignUp Form</h2>
 
-<form action="/SignUp", method="POST">
-    <div>
-        <input type="text" name="email" placeholder="Enter your email here">
-    </div> <br>
-    <div>
-        <input type="password" name="password" placeholder="Add your password here">
-    </div> <br>
-    <div>
-        <input type="text" name="name" placeholder="Enter your name here (optional)">
-    </div> <br>
-    <div>
-        <input type="text" name="zip" placeholder="Enter your zipcode here (optional)">
-    </div> <br>
-    <input type="submit" value="Sign Up">
-</form>
+
+        {%if "id" in session %}
+            <a href="/search">You are all set! Start searching your hikes! </a> 
+
+        {% else %}
+
+            <h2>SignUp Form</h2>
+        
+
+            <form action="/SignUp", method="POST">
+            <div>
+                <input type="text" name="email" placeholder="Enter your email here">
+            </div> <br>
+            <div>
+                <input type="password" name="password" placeholder="Add your password here">
+            </div> <br>
+            <div>
+                <input type="text" name="name" placeholder="Enter your name here (optional)">
+            </div> <br>
+            <div>
+                <input type="text" name="zip" placeholder="Enter your zipcode here (optional)">
+            </div> <br>
+                <input type="submit" value="Sign Up">
+            </form>
+
+        {% endif%}
 
 {% endblock %}

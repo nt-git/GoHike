@@ -179,7 +179,11 @@ def get_trail_info_add_to_db():
 def get_trail_comment_add_to_db():
     """Get Trail info from front end when user selects and stores in Attr Table"""
 
+
     trail_id = request.form.get("trail_id")
+    comments = request.form.get("comments")
+
+    print comments
 
     return render_template("homepage.html")
 
