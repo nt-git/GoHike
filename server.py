@@ -6,7 +6,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import User, Trail, UserTrail, Hike, connect_to_db, db
+from model import User, Trail, UserTrail, Hike, Attr, TrailAttr, connect_to_db, db
 
 import geocoder
 import requests
@@ -179,11 +179,22 @@ def get_trail_info_add_to_db():
 def get_trail_comment_add_to_db():
     """Get Trail info from front end when user selects and stores in Attr Table"""
 
-
     trail_id = request.form.get("trail_id")
     comments = request.form.get("comments")
 
     print comments
+
+    #Add this record in Attr and TrailAttr Table.
+
+    attr = Attr(name=comments)
+    db.session.add(attr)
+    db.session.commit()
+
+    attr_id = attr.attr_id
+
+    trailattr = TrailAttr(trail_id=trail_id, attr_id=attr_id)
+    db.session.add(trailattr)
+    db.session.commit()
 
     return render_template("homepage.html")
 
