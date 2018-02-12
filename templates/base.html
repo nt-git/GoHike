@@ -12,7 +12,7 @@
         {%if "id" not in session %}
             <a href="/SignIn">Sign In</a> &nbsp; <a href="/SignUp">/ Sign Up</a>
         {% else %}
-            
+            <a href="/users/id">My Hikes</a>
             <a href="/search">Plan Hikes</a>
             <a href="/logout">Logout</a>
         {% endif%}

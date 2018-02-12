@@ -19,6 +19,7 @@
                     <th>Trail Length (miles) </th>
                     <th>Date</th>
                     <th>Comments</th>
+                    <th>Rate</th>
                 </tr>
                 
                 {% for usertrail in user.usertrails %}
@@ -37,10 +38,12 @@
 
                         {% else %}
                             {% for trailattr in usertrail.trail.trailattrs %}
-                                {{trailattr.attr.name}}
-                            {% endfor %}
-
+                                <span class="edit-comment"> {{trailattr.attr.name}} </span>
+                                <input id="get-edit-comment" value="{{trailattr.attr.name}}" hidden>
+                                <button class="edit-it" data-trail-id="{{ usertrail.trail.trail_id }}">Edit</button>
+                            {% endfor %}    
                         {% endif %}</td>
+                    <td></td>
 
                 </tr>
                 {% endfor %}
@@ -56,6 +59,7 @@
 <script>
   "use strict";
 
+  /* Add Comments  */
   function showInfo(results){
     console.log("hi")
     
@@ -81,7 +85,37 @@
     $.post("/get-trails-comment",formInputs, showInfo);
   }
 
+
   $(".comment-it").on('click', getInfo);
+
+   /* Now Edit Comments  */
+  function showComment(results){
+    console.log("hi")
+    
+  }
+
+  function getComment(evt){
+    evt.preventDefault();
+    
+
+    // let inputId = $(this).data("edit");
+    //let comments = $(".edit-comment").html;
+    let comments = $("#get-edit-comment").val();
+
+    console.log(comments);
+
+    console.log("hi");
+    
+    var formInputs = {
+        "trail_id": $(this).data('trail-id'),
+        "comments": comments
+    }
+
+    
+    $.post("/update-trails-comment",formInputs, showComment);
+  }
+
+  $(".edit-it").on('click', getComment);
 
 </script>
 

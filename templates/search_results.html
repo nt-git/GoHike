@@ -7,7 +7,10 @@
 <div class='trail-div'>
     {% for i in range(number) %}
 
-        <b>  Name: {{ num_results[i].get('name') }} </b>
+        <b>  Name: {{ num_results[i].get('name') }} </b> &nbsp;  
+            {% if num_results[i].get('name') in visited_names  %}
+                <h4>You have already visited this trail<h4>
+            {% endif %}
 
         <span class="hikeit-span">
             <button id="hike-it" data-tooltip="{{ num_results[i].get('id') }}" data-name="{{ num_results[i].get('name') }}" data-url="{{ num_results[i].get('url') }}" data-length="{{ num_results[i].get('length') }}" data-type="{{ num_results[i].get('type') }}" data-star="{{ num_results[i].get('stars') }}">Hike It</button>
@@ -19,11 +22,6 @@
         <b> Summary: {{ num_results[i].get('summary') }} <b><br><br>
         <b> Image: <img src="{{ num_results[i].get('imgSqSmall') }}" ><br><br>
 
-         {% for usertrail in user.usertrails %}
-            {% if usertrail.trail.name == num_results[i].get('name')  %}
-                <h4>You have already visited this trail<h4>
-            {% endif %}
-        {% endfor %} 
 
     {% endfor %}
  </div>  

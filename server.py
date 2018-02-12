@@ -95,7 +95,6 @@ def user_profile(u_id):
     """Shows details about a specific user."""
 
     user = User.query.options(db.joinedload('usertrails', 'trail')).get(u_id)
-    #user_trails_visited = 
 
     return render_template("user_detail.html", user=user)
 
@@ -134,7 +133,11 @@ def user_search_trails():
     user_id = session['id']
     user = User.query.options(db.joinedload('usertrails', 'trail')).get(user_id)
 
-    return render_template("search_results.html", dict=trail, num_results=num_results, number=number, lat=url_lat, lng=url_lng, user=user)
+    visited_names = [usertrail.trail.name for usertrail in user.usertrails]
+    unique_visited = list(set(visited_names))
+    print unique_visited
+
+    return render_template("search_results.html", dict=trail, num_results=num_results, number=number, lat=url_lat, lng=url_lng, user=user, visited_names=unique_visited)
 
 
 @app.route("/get-trails-info", methods=["POST"])
@@ -195,6 +198,30 @@ def get_trail_comment_add_to_db():
     trailattr = TrailAttr(trail_id=trail_id, attr_id=attr_id)
     db.session.add(trailattr)
     db.session.commit()
+
+    return render_template("homepage.html")
+
+
+@app.route("/update-trails-comment", methods=["POST"])
+def update_trail_comment_add_to_db():
+    """Get Trail info from front end when user selects and stores in Attr Table"""
+
+    trail_id = request.form.get("trail_id")
+    comments = request.form.get("comments")
+
+    print comments
+
+    #Update this record in Attr and TrailAttr Table.
+
+    # attr = Attr(name=comments)
+    # db.session.add(attr)
+    # db.session.commit()
+
+    # attr_id = attr.attr_id
+
+    # trailattr = TrailAttr(trail_id=trail_id, attr_id=attr_id)
+    # db.session.add(trailattr)
+    # db.session.commit()
 
     return render_template("homepage.html")
 
