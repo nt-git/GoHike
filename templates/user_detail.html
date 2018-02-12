@@ -31,9 +31,15 @@
                         {% endfor %}</td>
                     <td>{% if usertrail.trail.trailattrs|length == 0 %}
                             <span class="comment-span">
-                            <input type="text" name="comments" placeholder"add your comments here" id="comments">
-                            <button id="comment-it" data-trail-id="{{ usertrail.trail.trail_id }}">Add</button>
+                            <input type="text" name="comments" placeholder"add your comments here" id="comments-{{ usertrail.trail.trail_id }}">
+                            <button class="comment-it" data-trail-id="{{ usertrail.trail.trail_id }}">Add</button>
                             </span><br>
+
+                        {% else %}
+                            {% for trailattr in usertrail.trail.trailattrs %}
+                                {{trailattr.attr.name}}
+                            {% endfor %}
+
                         {% endif %}</td>
 
                 </tr>
@@ -59,11 +65,12 @@
     evt.preventDefault();
     
 
-    let comments = $(this).parent().val()
+    let inputId = $(this).data("trailId");
+    let comments = $("#comments-"+inputId).val();
 
-    console.log(comments)
+    console.log(comments);
 
-    console.log("hi")
+    console.log("hi");
     
     var formInputs = {
         "trail_id": $(this).data('trail-id'),
@@ -74,7 +81,7 @@
     $.post("/get-trails-comment",formInputs, showInfo);
   }
 
-  $("#comment-it").on('click', getInfo);
+  $(".comment-it").on('click', getInfo);
 
 </script>
 
