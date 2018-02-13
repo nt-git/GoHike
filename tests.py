@@ -15,8 +15,6 @@ class HikeTests(unittest.TestCase):
         self.assertIn("nearby Trails", result.data)
 
     def test_no_signin_yet(self):
-        # Add a test to show we see the RSVP form, but NOT the
-        # party details
         result = self.client.get("/")
         self.assertIn("SignIn", result.data)
         self.assertNotIn("Logout", result.data)
@@ -32,7 +30,7 @@ class HikeTestsDatabase(unittest.TestCase):
         app.config['TESTING'] = True
 
         # Connect to test database (uncomment when testing database)
-        connect_to_db(app, "postgresql:///testdb")
+        connect_to_db(app, "testdb")
 
         with self.client as c:
                 with c.session_transaction() as sess:
@@ -51,7 +49,7 @@ class HikeTestsDatabase(unittest.TestCase):
 
     def test_games(self):
         #FIXME: test that the user page displays the user from example_data()
-        result = self.client.get("/users/" + str(sess['id']))
+        result = self.client.get("/users/1")
         self.assertIn("Test", result.data)
         self.assertNotIn("Test3", result.data)
 

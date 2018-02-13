@@ -151,11 +151,11 @@ class Recommendation(db.Model):
         return "<Recommendation frecommendation_id={}>".format(self.recommendation_id)
 
 
-def connect_to_db(app):
+def connect_to_db(app, dbname):
     """Connect the database to our Flask app."""
 
     # Configure to use our PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///hiking'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///' + dbname 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
@@ -176,6 +176,6 @@ if __name__ == "__main__":
 
     from flask import Flask
     app = Flask(__name__)
-    connect_to_db(app)
+    connect_to_db(app, "hiking")
     db.create_all()
     print "Connected to DB."

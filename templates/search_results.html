@@ -5,25 +5,44 @@
 
 <!-- Create a div for every Trail using a Jinja for loop -->
 <div class='trail-div'>
-    {% for i in range(number) %}
 
-        <b>  Name: {{ num_results[i].get('name') }} </b> &nbsp;  
+    <div class="container-fluid">
+            <table class="table table-hover">
+                <tr>
+                    <th>Trail Name</th>
+                    <th>Plan Hike</th> 
+                    <th>Trail URL</th>
+                    <th>Location</th>
+                    <th>Trail Summary</th>
+                    <th>Trail Image</th>
+                </tr>
+
+
+
+
+    {% for i in range(number) %}
+    <tr>
+        <td>{{ num_results[i].get('name') }}  &nbsp;  
             {% if num_results[i].get('name') in visited_names  %}
                 <h4>You have already visited this trail<h4>
-            {% endif %}
+            {% endif %}</td>
 
-        <span class="hikeit-span">
+        <td><span class="hikeit-span">
             <button id="hike-it" data-tooltip="{{ num_results[i].get('id') }}" data-name="{{ num_results[i].get('name') }}" data-url="{{ num_results[i].get('url') }}" data-length="{{ num_results[i].get('length') }}" data-type="{{ num_results[i].get('type') }}" data-stars="{{ num_results[i].get('stars') }}">Hike It</button>
             Enter Date: <input type="date" name="date" id="date-time">
-        </span><br>
+        </span></td>
         
-        <b> URL: <a href= "">{{ num_results[i].get('url') }}</a> <b><br>
-        <b> Location: {{ num_results[i].get('location') }} <b><br>
-        <b> Summary: {{ num_results[i].get('summary') }} <b><br><br>
-        <b> Image: <img src="{{ num_results[i].get('imgSqSmall') }}" ><br><br>
+        <td><a href= "">{{ num_results[i].get('url') }}</td>
+        <td>{{ num_results[i].get('location') }} </td>
+        <td>{{ num_results[i].get('summary') }} </td>
+       <td><img src="{{ num_results[i].get('imgSqSmall') }}" ></td>
 
-
+    </tr>
     {% endfor %}
+
+    </table>
+</div>
+
  </div>  
 
  <head>

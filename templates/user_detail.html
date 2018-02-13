@@ -19,7 +19,7 @@
                     <th>Trail Length (miles) </th>
                     <th>Date</th>
                     <th>Comments</th>
-                    <th>Rate</th>
+                    <th>Overall Rating</th>
                 </tr>
                 
                 {% for usertrail in user.usertrails %}
@@ -30,7 +30,7 @@
                     <td>{% for hike in usertrail.hikes %}
                             {{hike.date}}
                         {% endfor %}</td>
-                    <td>{% if usertrail.trail.trailattrs|length == 0 %}
+                    <td id="td-{{ usertrail.trail.trail_id }}">{% if usertrail.trail.trailattrs|length == 0 %}
                             <span class="comment-span">
                             <input type="text" name="comments" placeholder"add your comments here" id="comments-{{ usertrail.trail.trail_id }}">
                             <button class="comment-it" data-trail-id="{{ usertrail.trail.trail_id }}">Add</button>
@@ -62,7 +62,11 @@
   /* Add Comments  */
   function showInfo(results){
     console.log("hi")
-    
+    let editButton = $("<button>");
+    editButton.append("Edit");
+    editButton.attr({"class":"edit-it","data-trail-id": results.trail_id});
+    $("#td-"+results.trail_id).append(editButton);
+
   }
 
   function getInfo(evt){
@@ -77,12 +81,12 @@
     console.log("hi");
     
     var formInputs = {
-        "trail_id": $(this).data('trail-id'),
+        "trail_id": inputId,
         "comments": comments
     }
 
     
-    $.post("/get-trails-comment",formInputs, showInfo);
+    $.post("/add-trails-comment",formInputs, showInfo);
   }
 
 

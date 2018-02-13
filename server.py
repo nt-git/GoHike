@@ -3,7 +3,7 @@
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Trail, UserTrail, Hike, Attr, TrailAttr, connect_to_db, db
@@ -178,8 +178,8 @@ def get_trail_info_add_to_db():
     return render_template("homepage.html")
 
 
-@app.route("/get-trails-comment", methods=["POST"])
-def get_trail_comment_add_to_db():
+@app.route("/add-trails-comment", methods=["POST"])
+def add_trail_comment_add_to_db():
     """Get Trail info from front end when user selects and stores in Attr Table"""
 
     trail_id = request.form.get("trail_id")
@@ -187,19 +187,21 @@ def get_trail_comment_add_to_db():
 
     print comments
 
-    #Add this record in Attr and TrailAttr Table.
+    #Update comment for the specific hike object
 
-    attr = Attr(name=comments)
-    db.session.add(attr)
-    db.session.commit()
+    #update_hike = 
 
-    attr_id = attr.attr_id
+    # attr = Attr(name=comments)
+    # db.session.add(attr)
+    # db.session.commit()
 
-    trailattr = TrailAttr(trail_id=trail_id, attr_id=attr_id)
-    db.session.add(trailattr)
-    db.session.commit()
+    # attr_id = attr.attr_id
 
-    return render_template("homepage.html")
+    # trailattr = TrailAttr(trail_id=trail_id, attr_id=attr_id)
+    # db.session.add(trailattr)
+    # db.session.commit()
+
+    return jsonify({"trail_id": trail_id})
 
 
 @app.route("/update-trails-comment", methods=["POST"])
@@ -243,7 +245,7 @@ if __name__ == "__main__":
     # make sure templates, etc. are not cached in debug mode
     app.jinja_env.auto_reload = app.debug
 
-    connect_to_db(app)
+    connect_to_db(app, "hiking")
 
     # Use the DebugToolbar
     DebugToolbarExtension(app)
