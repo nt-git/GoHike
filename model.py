@@ -58,7 +58,7 @@ class UserTrail(db.Model):
     usertrail_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     trail_id = db.Column(db.Integer, db.ForeignKey("trails.trail_id"), nullable=False)
-    rating = db.Column(db.Integer, nullable=True)
+    rating = db.Column(db.Float, nullable=True)
 
     user = db.relationship("User", backref=db.backref("usertrails", order_by=usertrail_id))
     trail = db.relationship("Trail", backref=db.backref("usertrails", order_by=usertrail_id))
