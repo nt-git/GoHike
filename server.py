@@ -121,6 +121,8 @@ def user_search_trails():
         url_lng = str(g.lng)
 
     url_maxResults = request.form.get("trail_num")
+    if not url_maxResults:
+        url_maxResults = str(10)
 
     #send request with above lat and long
     r = requests.get("https://www.hikingproject.com/data/get-trails?lat="+url_lat+"&lon="+url_lng+"&maxDistance=10&maxResults="+url_maxResults+"&key="+hiking_consumer_key)
@@ -178,7 +180,9 @@ def get_trail_info_add_to_db():
     db.session.add(hike)
     db.session.commit()
 
-    return render_template("homepage.html")
+    flash("you just added " + name + " to your hike list!")
+
+    return jsonify({"trail_id": trail_id})
 
 
 @app.route("/add-trails-comment", methods=["POST"])
@@ -188,8 +192,6 @@ def add_trail_comment_add_to_db():
     trail_id = request.form.get("trail_id")
     comments = request.form.get("comments")
     hike_id = request.form.get("hike_id")
-
-    print comments
 
     #Update comment in Hikes table for the specific hike object
     hike = db.session.query(Hike).filter_by(hike_id=hike_id).first()
