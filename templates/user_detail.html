@@ -19,30 +19,42 @@
                     <th>Trail Length (miles) </th>
                     <th>Date</th>
                     <th>Comments</th>
+                    <th>Your Rating</th>
                     <th>Overall Rating</th>
                 </tr>
                 
                 {% for usertrail in user.usertrails %}
                 <tr>
+                     {% for hike in usertrail.hikes %}
+                        <input id="hike-comment" value="{{ hike.hike_id }}" hidden>
+                     {% endfor %}
+
+
                     <td>{{usertrail.trail.name}}</td>
                     <td><a href= "">{{usertrail.trail.url}}</a></td>
                     <td>{{usertrail.trail.length}}</td>
                     <td>{% for hike in usertrail.hikes %}
                             {{hike.date}}
                         {% endfor %}</td>
-                    <td id="td-{{ usertrail.trail.trail_id }}">{% if usertrail.trail.trailattrs|length == 0 %}
+                    <td id="td-{{ usertrail.trail.trail_id }}">
+
+                        {% for hike in usertrail.hikes %}
+                            {% if not hike.comments %}
                             <span class="comment-span">
                             <input type="text" name="comments" placeholder"add your comments here" id="comments-{{ usertrail.trail.trail_id }}">
                             <button class="comment-it" data-trail-id="{{ usertrail.trail.trail_id }}">Add</button>
                             </span><br>
 
                         {% else %}
-                            {% for trailattr in usertrail.trail.trailattrs %}
-                                <span class="edit-comment"> {{trailattr.attr.name}} </span>
-                                <input id="get-edit-comment" value="{{trailattr.attr.name}}" hidden>
+                            {% for hike in usertrail.hikes %}
+                                <span class="edit-comment"> {{hike.comments}} </span>
+                                <input id="get-edit-comment" value="{{hike.comments}}" hidden>
                                 <button class="edit-it" data-trail-id="{{ usertrail.trail.trail_id }}">Edit</button>
                             {% endfor %}    
                         {% endif %}</td>
+                        {% endfor %}
+
+                    <td></td>
                     <td>{{ usertrail.rating }}</td>
 
                 </tr>
@@ -75,14 +87,17 @@
 
     let inputId = $(this).data("trailId");
     let comments = $("#comments-"+inputId).val();
+    let hikeId = $("#hike-comment").val();
 
     console.log(comments);
+    console.log(hikeId);
 
     console.log("hi");
     
     var formInputs = {
         "trail_id": inputId,
-        "comments": comments
+        "comments": comments,
+        "hike_id": hikeId
     }
 
     

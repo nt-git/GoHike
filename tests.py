@@ -19,6 +19,22 @@ class HikeTests(unittest.TestCase):
         self.assertIn("SignIn", result.data)
         self.assertNotIn("Logout", result.data)
 
+    def test_search(self):
+        #search without signin in
+        result = self.client.get("/search")
+        self.assertNotIn("Select", result.data)
+        self.assertIn("Signed In", result.data)
+
+    def test_signin_yet(self):
+        result = self.client.get("/SignIn")
+        self.assertIn("SignIn", result.data)
+        self.assertNotIn("Logout", result.data)
+
+    def test_signup_yet(self):
+        result = self.client.get("/SignUp")
+        self.assertIn("SignUp", result.data)
+        self.assertNotIn("Logout", result.data)
+
 
 class HikeTestsDatabase(unittest.TestCase):
     """Flask tests that use the database."""

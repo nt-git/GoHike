@@ -154,8 +154,11 @@ def get_trail_info_add_to_db():
     rating = request.form.get("stars")
 
     #Add this record in Trail, UserTrails and Hike Table
-    #Need to check if this record already exists in Trails then don't add it in Trails
 
+    #Need to check if same trail with same date exists in Hike Table already then flash the message
+    #to the user - You have already added this Hike!
+
+    #Need to check if this record already exists in Trails then don't add it in Trails
     query = db.session.query(Trail)
     users_trails = query.filter(Trail.trail_id == trail_id).all()
 
@@ -171,7 +174,7 @@ def get_trail_info_add_to_db():
     usertrail_id = usertrails.usertrail_id
 
     #date = datetime.strptime(date, '%Y-%d-%m')
-    hike = Hike(usertrail_id=usertrail_id, date=date, comments="Very Nice")
+    hike = Hike(usertrail_id=usertrail_id, date=date)
     db.session.add(hike)
     db.session.commit()
 
@@ -180,52 +183,21 @@ def get_trail_info_add_to_db():
 
 @app.route("/add-trails-comment", methods=["POST"])
 def add_trail_comment_add_to_db():
-    """Get Trail info from front end when user selects and stores in Attr Table"""
+    """Get Hike Comment from front end and store it in Hike Table"""
 
     trail_id = request.form.get("trail_id")
     comments = request.form.get("comments")
+    hike_id = request.form.get("hike_id")
 
     print comments
 
-    #Update comment for the specific hike object
+    #Update comment in Hikes table for the specific hike object
+    hike = db.session.query(Hike).filter_by(hike_id=hike_id).first()
 
-    #update_hike = 
-
-    # attr = Attr(name=comments)
-    # db.session.add(attr)
-    # db.session.commit()
-
-    # attr_id = attr.attr_id
-
-    # trailattr = TrailAttr(trail_id=trail_id, attr_id=attr_id)
-    # db.session.add(trailattr)
-    # db.session.commit()
+    hike.comments = comments
+    db.session.commit()
 
     return jsonify({"trail_id": trail_id})
-
-
-@app.route("/update-trails-comment", methods=["POST"])
-def update_trail_comment_add_to_db():
-    """Get Trail info from front end when user selects and stores in Attr Table"""
-
-    trail_id = request.form.get("trail_id")
-    comments = request.form.get("comments")
-
-    print comments
-
-    #Update this record in Attr and TrailAttr Table.
-
-    # attr = Attr(name=comments)
-    # db.session.add(attr)
-    # db.session.commit()
-
-    # attr_id = attr.attr_id
-
-    # trailattr = TrailAttr(trail_id=trail_id, attr_id=attr_id)
-    # db.session.add(trailattr)
-    # db.session.commit()
-
-    return render_template("homepage.html")
 
 
 @app.route("/logout")

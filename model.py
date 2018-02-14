@@ -78,6 +78,7 @@ class Hike(db.Model):
     usertrail_id = db.Column(db.Integer, db.ForeignKey("usertrails.usertrail_id"), nullable=False)
     date = db.Column(db.DateTime, nullable=True)
     comments = db.Column(db.String(500), nullable=True)
+    u_rating = db.Column(db.Float, nullable=True)
 
     usertrail = db.relationship("UserTrail", backref=db.backref("hikes", order_by=hike_id))
 
