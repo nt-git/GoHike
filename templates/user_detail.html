@@ -98,7 +98,7 @@
     debugger;
 
     let inputId = $(this).data("trailId");
-    let comments = $("#comments-"+inputId).val();
+    let comments = $(this).prev().val();
     let hikeId = $(this).data("hike-id");
 
     console.log(comments);
@@ -134,7 +134,8 @@
 
     var old_comments = $(this).prev().text();
     $(this).prev().remove();
-    $(this).before("<input type='text'value=" + old_comments + ">");
+    $(this).before("<input type='text'>");
+    $(this).prev().val(old_comments);
     $(this).attr("class", "comment-it");
     $(this).html("Add");
     var comments = $(this).prev().val()
