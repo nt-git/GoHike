@@ -6,12 +6,13 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import User, Trail, UserTrail, Hike, Attr, TrailAttr, connect_to_db, db
+from model import User, Trail, UserTrail, Hike, connect_to_db, db
 
 import geocoder
 import requests
 import os
 import datetime
+import dateutil.parser
 
 
 app = Flask(__name__)
@@ -96,7 +97,32 @@ def user_profile(u_id):
 
     user = User.query.options(db.joinedload('usertrails', 'trail')).get(u_id)
 
-    return render_template("user_detail.html", user=user)
+    #Collect data for chartJS that how many hikes done in each month, so check hike list for the user and for each hike month.
+    num_jan = 0
+    num_feb = 0
+    num_march = 0
+    num_april = 0
+    num_may = 0
+    num_june = 0
+    for usertrail in user.usertrails:
+        for hike in usertrail.hikes:
+            date = hike.date
+            if date.month == 1:
+                num_jan = num_jan + 1
+            elif date.month == 2:
+                num_feb = num_feb + 1
+            elif date.month == 3:
+                num_march = num_march + 1
+            elif date.month == 4:
+                num_april = num_april + 1
+            elif date.month == 5:
+                num_may = num_may + 1
+            elif date.month == 6:
+                num_june = num_june + 1
+
+    hike_num_list = [num_jan, num_feb, num_march, num_april, num_may, num_june]
+
+    return render_template("user_detail.html", user=user, hike_num_list=hike_num_list)
 
 
 @app.route("/search", methods=["GET"])
@@ -137,7 +163,6 @@ def user_search_trails():
 
     visited_names = [usertrail.trail.name for usertrail in user.usertrails]
     unique_visited = list(set(visited_names))
-    print unique_visited
 
     return render_template("search_results.html", dict=trail, num_results=num_results, number=number, lat=url_lat, lng=url_lng, user=user, visited_names=unique_visited)
 
@@ -175,8 +200,9 @@ def get_trail_info_add_to_db():
 
     usertrail_id = usertrails.usertrail_id
 
-    #date = datetime.strptime(date, '%Y-%d-%m')
-    hike = Hike(usertrail_id=usertrail_id, date=date)
+    parsed_date = dateutil.parser.parse(date).date()
+    print parsed_date
+    hike = Hike(usertrail_id=usertrail_id, date=parsed_date)
     db.session.add(hike)
     db.session.commit()
 
@@ -194,6 +220,7 @@ def add_trail_comment_add_to_db():
     hike_id = request.form.get("hike_id")
 
     #Update comment in Hikes table for the specific hike object
+    print comments
     hike = db.session.query(Hike).filter_by(hike_id=hike_id).first()
 
     hike.comments = comments
