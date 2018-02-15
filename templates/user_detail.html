@@ -48,9 +48,10 @@
 
                         {% else %}
                             {% for hike in usertrail.hikes %}
-                                <span class="edit-comment"> {{hike.comments}} </span>
-                                <input id="get-edit-comment" value="{{hike.comments}}" hidden>
+                                <span class="edit-comment"> {{hike.comments}} 
+                                <!-- <input id="get-edit-comment" value="{{hike.comments}}" hidden>-->
                                 <button class="edit-it" data-trail-id="{{ usertrail.trail.trail_id }}">Edit</button>
+                                </span>
                             {% endfor %}    
                         {% endif %}</td>
                         {% endfor %}
@@ -79,17 +80,12 @@
 
   /* Add Comments  */
   function showInfo(results){
-    console.log("hi")
-    let editButton = $("<button>");
-    editButton.append("Edit");
-    editButton.attr({"class":"edit-it","data-trail-id": results.trail_id});
-    $("#td-"+results.trail_id).append(editButton);
 
+    console.log("hi")
   }
 
   function getInfo(evt){
     evt.preventDefault();
-    
 
     let inputId = $(this).data("trailId");
     let comments = $("#comments-"+inputId).val();
@@ -104,11 +100,17 @@
     }
     
     $.post("/add-trails-comment",formInputs, showInfo);
+
+    $(this).attr("class", "edit-it")
+    $(this).html("Edit")
+    $(this).prev().remove()    
+    $(this).before("<span>" +comments+ "</span>")
+
   }
 
 
   /*$(".comment-it").on('click', getInfo);*/
-    $(document).on('click', ".comment-it", getInfo)
+ $(document).on('click', ".comment-it", getInfo)
 
    /* Now Edit Comments  */
   function showComment(results){
@@ -119,25 +121,28 @@
   function getComment(evt){
     evt.preventDefault();
     
+    debugger;
+    old_comments = $(this).prev().text()
+    $(this).prev().remove()
+    $(this).before("<input type='text'>" + old_comments + "</input>")
+    $(this).attr("class", "comment-it")
+    $(this).html("Add")
+    let comments = $("#comments-"+inputId).val();
 
-    // let inputId = $(this).data("edit");
-    //let comments = $(".edit-comment").html;
-    let comments = $("#get-edit-comment").val();
-
-    console.log(comments);
-
-    console.log("hi");
     
     var formInputs = {
         "trail_id": $(this).data('trail-id'),
         "comments": comments
     }
 
-    
-    $.post("/update-trails-comment",formInputs, showComment);
+
+    $.post("/add-trails-comment",formInputs, showComment);
+
+
   }
 
-  $(".edit-it").on('click', getComment);
+  $(document).on('click', ".edit-it", getComment)
+
 
 </script>
 
