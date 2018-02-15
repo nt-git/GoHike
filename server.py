@@ -202,6 +202,23 @@ def add_trail_comment_add_to_db():
     return jsonify({"trail_id": trail_id})
 
 
+@app.route("/add-rating", methods=["POST"])
+def add_trail_rating_add_to_db():
+    """Get Hike Comment from front end and store it in Hike Table"""
+
+    #trail_id = request.form.get("trail_id")
+    u_rating = request.form.get("u_rating")
+    hike_id = request.form.get("hike_id")
+
+    #Update comment in Hikes table for the specific hike object
+    hike = db.session.query(Hike).filter_by(hike_id=hike_id).first()
+
+    hike.u_rating = u_rating
+    db.session.commit()
+
+    return jsonify({"hike_id": hike_id})
+
+
 @app.route("/logout")
 def user_logout():
     """ Logout User and Redirect to Homepage """

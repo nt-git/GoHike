@@ -57,9 +57,17 @@
                         {% endfor %}
 
                     <td>{% for hike in usertrail.hikes %}
-                        <span class="rating-span">
-                        <input type="number" name="your-rating" step="0.5" min="1" max="5">
-                        <button class="rate-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}" > Rate </button>
+                            {% if not hike.u_rating%}
+                                 <span class="rating-span">
+                                 <input type="number" name="your-rating" step="0.5" min="1" max="5" data-hike-id="{{ hike.hike_id }}">
+                                 <button class="rate-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}" > Rate </button>
+                                 </span>
+                            {% else %}
+                                {% for hike in usertrail.hikes %}
+                                    <span class="final rating"> {{hike.u_rating}} 
+                                {% endfor %}
+                            {% endif %}
+
                         {% endfor%} </td>
 
                     <td>{{ usertrail.rating }}</td>
@@ -121,12 +129,11 @@
   function getComment(evt){
     evt.preventDefault();
     
-    debugger;
-    old_comments = $(this).prev().text()
-    $(this).prev().remove()
-    $(this).before("<input type='text'>" + old_comments + "</input>")
-    $(this).attr("class", "comment-it")
-    $(this).html("Add")
+    var old_comments = $(this).prev().text();
+    $(this).prev().remove();
+    $(this).before("<input type='text'placeholder=" + old_comments + ">");
+    $(this).attr("class", "comment-it");
+    $(this).html("Add");
     let comments = $("#comments-"+inputId).val();
 
     
@@ -142,6 +149,34 @@
   }
 
   $(document).on('click', ".edit-it", getComment)
+
+
+ /* Add Rating */
+
+ function showRating(results){
+    console.log("rating print")
+ }
+
+ function getRating(evt){
+    evt.preventDefault();
+
+    let rating = $(this).prev().val()
+    let hikeId = $(this).data("hike-id");
+
+    console.log(rating)
+
+    var formInputs = {
+        "u_rating":rating,
+        "hike_id": hikeId
+    }
+
+    $.post("/add-rating", formInputs, showRating);
+
+ }
+
+ $(".rate-it").on('click', getRating)
+
+
 
 
 </script>
