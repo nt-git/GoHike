@@ -71,10 +71,11 @@
         });
 
         bounds  = new google.maps.LatLngBounds();
-        
+
         {% for i in range(number) %}
 
         var i = new google.maps.LatLng({{ num_results[i].get('latitude') }}, {{ num_results[i].get('longitude') }});
+        bounds.extend(i);
         var marker = new google.maps.Marker({
         position: i,
         map: map,
@@ -82,6 +83,9 @@
         });
 
         {% endfor %}
+
+        map.fitBounds(bounds);
+        map.panToBounds(bounds);
 
       }
 
