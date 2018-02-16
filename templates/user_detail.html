@@ -42,7 +42,7 @@
                         {% for hike in usertrail.hikes %}
                             {% if not hike.comments %}
                             <span class="comment-span">
-                            <input type="text" name="comments" placeholder"add your comments here" id="comments-{{ usertrail.trail.trail_id }}">
+                            <input type="text" name="comments" placeholder="add your comments here" id="comments-{{ usertrail.trail.trail_id }}">
                             <button class="comment-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}" >Add</button>
                             </span><br>
 
