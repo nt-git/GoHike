@@ -70,7 +70,8 @@
           center: myLatLng
         });
 
-
+        bounds  = new google.maps.LatLngBounds();
+        
         {% for i in range(number) %}
 
         var i = new google.maps.LatLng({{ num_results[i].get('latitude') }}, {{ num_results[i].get('longitude') }});

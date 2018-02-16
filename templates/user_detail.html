@@ -95,8 +95,6 @@
   function getInfo(evt){
     evt.preventDefault();
 
-    debugger;
-
     let inputId = $(this).data("trailId");
     let comments = $(this).prev().val();
     let hikeId = $(this).data("hike-id");
@@ -130,7 +128,6 @@
 
   function getComment(evt){
     evt.preventDefault();
-    debugger;
 
     var old_comments = $(this).prev().text();
     $(this).prev().remove();
