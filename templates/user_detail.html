@@ -185,8 +185,12 @@
 
 </script>
 
+ <script src=
+  "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js">
+    </script>
+    <canvas id="bar-chart" width="800" height="250"></canvas> 
 
-<!-- <script>
+ <script>
     "use strict";
     // Bar chart
     new Chart(document.getElementById("bar-chart"), {
@@ -198,6 +202,11 @@
           label: "number of hikes",
           backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
           data: {{ hike_num_list }}
+        },
+        {
+          label: "total miles hiked",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: {{ hike_len_list }}
         }
       ]
     },
@@ -205,12 +214,12 @@
       legend: { display: false },
       title: {
         display: true,
-        text: 'Your hikes view'
+        text: 'Number of hikes in each month'
       }
     }
 });
 
-</script>  -->
+</script>  
 
 
 {% endblock %}
