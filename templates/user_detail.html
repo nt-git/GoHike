@@ -22,6 +22,7 @@
                     <th>Comments</th>
                     <th>Your Rating</th>
                     <th>Overall Rating</th>
+                    <th>Recommend</th>
                 </tr>
                 
                 {% for usertrail in user.usertrails %}
@@ -71,6 +72,8 @@
                         {% endfor%} </td>
 
                     <td>{{ usertrail.rating }}</td>
+
+                    <td><button class="recommend-it" data-trail-id="{{ usertrail.trail.trail_id }}" > Recommend </button></td>
 
                 </tr>
                 {% endfor %}
