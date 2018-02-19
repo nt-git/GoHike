@@ -13,6 +13,7 @@ import requests
 import os
 import datetime
 import dateutil.parser
+import hashlib
 
 
 app = Flask(__name__)
@@ -48,6 +49,7 @@ def user_sign_in():
     email = request.form.get("email")
     password = request.form.get("password")
     query_user = User.query.filter_by(email=email).first()
+    #h_password = hashlib.sha1(password).hexdigest()
 
     if not query_user:
         flash("That email isn't in our system.  It looks like you need to sign up!")
@@ -78,6 +80,7 @@ def user_sign_up():
     zipcode = request.form.get("zip")
     query = db.session.query('User')
     users_emails = query.filter(User.email == email).all()
+    #hash_password = hashlib.sha1(password).hexdigest()
 
     if users_emails:
         flash("User already exists!")
