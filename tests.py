@@ -30,7 +30,8 @@ class HikeTests(unittest.TestCase):
         self.assertIn("SignIn", result.data)
         self.assertNotIn("Logout", result.data)
 
-    def test_signup_yet(self):
+
+    def test_no_signup_yet(self):
         result = self.client.get("/SignUp")
         self.assertIn("SignUp", result.data)
         self.assertNotIn("Logout", result.data)
@@ -68,6 +69,14 @@ class HikeTestsDatabase(unittest.TestCase):
         result = self.client.get("/users/1")
         self.assertIn("Test", result.data)
         self.assertNotIn("Test3", result.data)
+
+    def test_signin(self):
+        result = self.client.post("/SignIn",
+                              data={"email": "fun@hb.com",
+                                    "password": "1234"},
+                                    follow_redirects=True)
+        self.assertIn("Hike List", result.data)
+        self.assertIn("Test", result.data)
 
 
 if __name__ == "__main__":
