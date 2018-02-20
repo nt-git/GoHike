@@ -178,6 +178,10 @@
 
     $.post("/add-rating", formInputs, showRating);
 
+    $(this).prev().remove()    
+    $(this).before("<span>" +rating+ "</span>")
+    $(this).hide();
+    $(".rate-it").hide();
 
  }
 

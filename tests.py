@@ -45,13 +45,14 @@ class HikeTestsDatabase(unittest.TestCase):
 
         self.client = app.test_client()
         app.config['TESTING'] = True
+        app.config['SECRET_KEY'] = 'key'
 
         # Connect to test database (uncomment when testing database)
         connect_to_db(app, "testdb")
 
         with self.client as c:
                 with c.session_transaction() as sess:
-                    sess['id'] = True
+                    sess['id'] = 1
 
         # Create tables and add sample data (uncomment when testing database)
         db.create_all()
@@ -72,11 +73,39 @@ class HikeTestsDatabase(unittest.TestCase):
 
     def test_signin(self):
         result = self.client.post("/SignIn",
-                              data={"email": "fun@hb.com",
-                                    "password": "1234"},
-                                    follow_redirects=True)
+                                data={"email": "fun@hb.com",
+                                      "password": "1234"},
+                                follow_redirects=True)
         self.assertIn("Hike List", result.data)
         self.assertIn("Test", result.data)
+
+    def test_signup(self):
+        result = self.client.post("/SignUp",
+                              data={"name": "unittest",
+                                    "email": "unittest@hb.com",
+                                    "zip": "11111",
+                                    "password": "1234"
+                                    },
+                              follow_redirects=True)
+        self.assertIn("Registered successfully", result.data)
+        self.assertIn("Search", result.data)
+
+    def test_search_zipcode(self):
+        result = self.client.post("/search",
+                              data={"zipcode": "94102"
+                                    },
+                              follow_redirects=True)
+        self.assertIn("Land", result.data)
+        self.assertIn("URL", result.data)
+
+    def test_search_location(self):
+        result = self.client.post("/search",
+                              data={"location": "Fremont"
+                                    },
+                              follow_redirects=True)
+        self.assertIn("Mission", result.data)
+        self.assertIn("URL", result.data)
+
 
 
 if __name__ == "__main__":

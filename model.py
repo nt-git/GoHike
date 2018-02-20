@@ -165,8 +165,8 @@ def connect_to_db(app, dbname):
 def example_data():
     """Create example data for the test database."""
     #FIXME: write a function that creates a user and adds it to the database.
-    u1 = User(user_id=1, name="Test", email="fun@hb.com", zipcode=12345, password=1234)
-    u2 = User(user_id=2, name="Test1", email="exciting@hb.com", zipcode=12345, password=1234)
+    u1 = User(name="Test", email="fun@hb.com", zipcode=12345, password=1234)
+    u2 = User(name="Test1", email="exciting@hb.com", zipcode=12345, password=1234)
     db.session.add_all([u1, u2])
     db.session.commit()
 
