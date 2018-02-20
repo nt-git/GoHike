@@ -240,7 +240,6 @@ def add_trail_comment_add_to_db():
     hike_id = request.form.get("hike_id")
 
     #Update comment in Hikes table for the specific hike object
-    print comments
     hike = db.session.query(Hike).filter_by(hike_id=hike_id).first()
 
     hike.comments = comments

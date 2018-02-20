@@ -167,7 +167,9 @@ def example_data():
     #FIXME: write a function that creates a user and adds it to the database.
     u1 = User(name="Test", email="fun@hb.com", zipcode=12345, password=1234)
     u2 = User(name="Test1", email="exciting@hb.com", zipcode=12345, password=1234)
-    db.session.add_all([u1, u2])
+    t1 = Trail(name="test trail", url="www.testtrail.com")
+    h1 = Hike(usertrail_id=50)
+    db.session.add_all([u1, u2, t1, h1])
     db.session.commit()
 
 

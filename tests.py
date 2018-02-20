@@ -107,6 +107,5 @@ class HikeTestsDatabase(unittest.TestCase):
         self.assertIn("URL", result.data)
 
 
-
 if __name__ == "__main__":
     unittest.main()
