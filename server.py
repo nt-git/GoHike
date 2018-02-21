@@ -113,32 +113,35 @@ def user_profile(u_id):
     len_april = 0
     len_may = 0
     len_june = 0
+    hike_num_list = []
+    hike_len_list = []
 
-    for usertrail in user.usertrails:
-        for hike in usertrail.hikes:
-            date = hike.date
+    if user.usertrails:
+        for usertrail in user.usertrails:
+            for hike in usertrail.hikes:
+                date = hike.date
 
-            if date.month == 1:
-                len_jan = len_jan + hike.usertrail.trail.length
-                num_jan = num_jan + 1
-            elif date.month == 2:
-                len_feb = len_feb + hike.usertrail.trail.length
-                num_feb = num_feb + 1
-            elif date.month == 3:
-                len_march = len_march + hike.usertrail.trail.length
-                num_march = num_march + 1
-            elif date.month == 4:
-                len_april = len_april + hike.usertrail.trail.length
-                num_april = num_april + 1
-            elif date.month == 5:
-                len_may = len_may + hike.usertrail.trail.length
-                num_may = num_may + 1
-            elif date.month == 6:
-                len_june = len_june + hike.usertrail.trail.length
-                num_june = num_june + 1
+                if date.month == 1:
+                    len_jan = len_jan + hike.usertrail.trail.length
+                    num_jan = num_jan + 1
+                elif date.month == 2:
+                    len_feb = len_feb + hike.usertrail.trail.length
+                    num_feb = num_feb + 1
+                elif date.month == 3:
+                    len_march = len_march + hike.usertrail.trail.length
+                    num_march = num_march + 1
+                elif date.month == 4:
+                    len_april = len_april + hike.usertrail.trail.length
+                    num_april = num_april + 1
+                elif date.month == 5:
+                    len_may = len_may + hike.usertrail.trail.length
+                    num_may = num_may + 1
+                elif date.month == 6:
+                    len_june = len_june + hike.usertrail.trail.length
+                    num_june = num_june + 1
 
-    hike_num_list = [num_jan, num_feb, num_march, num_april, num_may, num_june]
-    hike_len_list = [len_jan, len_feb, len_march, len_april, len_may, len_june]
+        hike_num_list = [num_jan, num_feb, num_march, num_april, num_may, num_june]
+        hike_len_list = [len_jan, len_feb, len_march, len_april, len_may, len_june]
 
     #Collect data for CharJs that how many miles hiked in each month - so check hike list for the user for each month and calculate lenght
 

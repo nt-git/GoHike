@@ -66,7 +66,7 @@ class HikeTestsDatabase(unittest.TestCase):
         db.session.close()
         db.drop_all()
 
-    def test_games(self):
+    def test_user_profile(self):
         #FIXME: test that the user page displays the user from example_data()
         result = self.client.get("/users/1")
         self.assertIn("Test", result.data)
@@ -108,19 +108,40 @@ class HikeTestsDatabase(unittest.TestCase):
         self.assertIn("URL", result.data)
 
 
-    # def test_get_trail_info(self):
-    #     result = self.client.post("/get-trails-info",
-    #                             data={"trail_id": "1",
-    #                                   "date": "2018-02-24",
-    #                                   "user_id": "1",
-    #                                   "name": "name",
-    #                                   "url": "url",
-    #                                   "length":"2.5",
-    #                                   "rating":"1.5"},
-    #                                   follow_redirects=True)
+    def test_get_trail_info(self):
+        result = self.client.post("/get-trails-info",
+                                data={"trail_id": "1",
+                                      "date": "2018-02-24",
+                                      "user_id": "1",
+                                      "name": "name",
+                                      "url": "url",
+                                      "length": "2.5",
+                                      "rating": "1.5"},
+                                      follow_redirects=True)
 
-    #     result_json_data = json.loads(result.data)
-    #     self.assertEqual(result_json_data['trail_id'],"1")
+        result_json_data = json.loads(result.data)
+        self.assertEqual(result_json_data['trail_id'],"1")
+
+    def test_get_comment_info(self):
+        result = self.client.post("/add-trails-comment",
+                                data={"trail_id": "1",
+                                      "comment": "abcd",
+                                      "hike_id": "1"},
+                                      follow_redirects=True)
+
+        result_json_data = json.loads(result.data)
+        self.assertEqual(result_json_data['trail_id'],"1")
+
+
+    def test_get_rating_info(self):
+        result = self.client.post("/add-rating",
+                                data={"hike_id": "1",
+                                      "u_rating": "2.5"
+                                      },
+                                      follow_redirects=True)
+
+        result_json_data = json.loads(result.data)
+        self.assertEqual(result_json_data['hike_id'],"1")
 
 if __name__ == "__main__":
     unittest.main()
