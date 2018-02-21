@@ -36,7 +36,7 @@
                     <td><a href= "">{{usertrail.trail.url}}</a></td>
                     <td>{{usertrail.trail.length}}</td>
                     <td>{% for hike in usertrail.hikes %}
-                            {{hike.date}}
+                            {{hike.date.strftime('%Y-%m-%d')}}
                         {% endfor %}</td>
                     <td id="td-{{ usertrail.trail.trail_id }}">
 
