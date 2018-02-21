@@ -74,7 +74,9 @@
 
                     <td>{{ usertrail.rating }}</td>
 
-                    <td><button class="recommend-it" data-trail-id="{{ usertrail.trail.trail_id }}" > Recommend </button></td>
+                    <td>
+                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Recommend</button>
+                    </td>
 
                 </tr>
                 {% endfor %}
@@ -86,9 +88,54 @@
  </div>
 
 
+ <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Recommend Trail</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">Recipient Email:</label>
+            <input type="text" class="form-control" id="recipient-email">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="control-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" onclick="sendFunction(this)" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
   "use strict";
+
+  
+  $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').focus()
+})
+
+  function sendFunction(element) {
+    
+    console.log("hi modal");
+    var re_email = $(element).parent().prev().find("#recipient-email").val();
+    var message = $(element).parent().prev().find("#message-text").val();
+    
+    console.log(re_email);
+    console.log(message);
+}
+
 
   /* Add Comments  */
   function showInfo(results){
