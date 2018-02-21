@@ -1,6 +1,7 @@
 import unittest
 from server import app
 from model import db, example_data, connect_to_db
+import json
 
 
 class HikeTests(unittest.TestCase):
@@ -106,6 +107,20 @@ class HikeTestsDatabase(unittest.TestCase):
         self.assertIn("Mission", result.data)
         self.assertIn("URL", result.data)
 
+
+    # def test_get_trail_info(self):
+    #     result = self.client.post("/get-trails-info",
+    #                             data={"trail_id": "1",
+    #                                   "date": "2018-02-24",
+    #                                   "user_id": "1",
+    #                                   "name": "name",
+    #                                   "url": "url",
+    #                                   "length":"2.5",
+    #                                   "rating":"1.5"},
+    #                                   follow_redirects=True)
+
+    #     result_json_data = json.loads(result.data)
+    #     self.assertEqual(result_json_data['trail_id'],"1")
 
 if __name__ == "__main__":
     unittest.main()
