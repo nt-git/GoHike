@@ -143,5 +143,16 @@ class HikeTestsDatabase(unittest.TestCase):
         result_json_data = json.loads(result.data)
         self.assertEqual(result_json_data['hike_id'],"1")
 
+    def test_send_email(self):
+        result = self.client.post("/send-email",
+                                data={"trail_name": "test trail",
+                                    "T_email": "niravtrivedi03@gmail.com",
+                                    "F_email": "niravtrivedi03@gmail.com",
+                                    "message": "recommending "},
+                                    follow_redirects=True)
+        result_json_data = json.loads(result.data)
+        self.assertEqual(result_json_data['trail_name'],"test trail")
+
+
 if __name__ == "__main__":
     unittest.main()

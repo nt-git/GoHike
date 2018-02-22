@@ -283,7 +283,7 @@ def send_email():
     sg = sendgrid.SendGridAPIClient(apikey=sendgrid_key)
     from_email = Email(F_email)
     to_email = Email(T_email)
-    subject = "Sending with SendGrid is Fun"
+    subject = "You got a Trail Recommendtion from GoHike"
     content = Content("text/plain", message)
     mail = Mail(from_email, subject, to_email, content)
     try:
