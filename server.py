@@ -14,6 +14,8 @@ import os
 import datetime
 import dateutil.parser
 import hashlib
+import sendgrid
+from sendgrid.helpers.mail import *
 
 
 app = Flask(__name__)
@@ -28,7 +30,7 @@ app.secret_key = "ABC"
 app.jinja_env.undefined = StrictUndefined
 
 hiking_consumer_key = os.environ['HIKING_CONSUMER_KEY']
-
+sendgrid_key = os.environ['SENDGRID_KEY']
 
 @app.route('/')
 def index():
@@ -266,6 +268,31 @@ def add_trail_rating_add_to_db():
     db.session.commit()
 
     return jsonify({"hike_id": hike_id})
+
+
+@app.route("/send-email", methods=["POST"])
+def send_email():
+    """ Send Email to Receipent """
+
+    trail_name = request.form.get("trail_name")
+    T_email = request.form.get("re_email")
+    F_email = request.form.get("se_email")
+    message = request.form.get("message") + trail_name
+    print message
+
+    sg = sendgrid.SendGridAPIClient(apikey=sendgrid_key)
+    from_email = Email(F_email)
+    to_email = Email(T_email)
+    subject = "Sending with SendGrid is Fun"
+    content = Content("text/plain", message)
+    mail = Mail(from_email, subject, to_email, content)
+    try:
+        response = sg.client.mail.send.post(request_body=mail.get())
+        print(response.status_code)
+    except Exception as e:
+        print (e.body)
+
+    return jsonify({"trail_name": trail_name})
 
 
 @app.route("/logout")

@@ -3,6 +3,7 @@
 import requests
 from pprint import pprint
 import json
+import os
 
 from model import User, Trail, UserTrails, connect_to_db, db
 
@@ -10,6 +11,8 @@ from model import User, Trail, UserTrails, connect_to_db, db
 #r1 = requests.get("https://www.hikingproject.com/data/get-conditions?ids=7000108,7002175,7005207,7001726,7005428&key=20021")
 #trail  = r1.json()
 #pprint(trail)
+
+hiking_consumer_key = os.environ['HIKING_CONSUMER_KEY']
 
 def add_user():
     """ Add a user to db"""
@@ -29,7 +32,7 @@ def add_user():
 def find_and_add_trail():
     """Get Trail Data by making a call to API and add one Trail to Trail Table -  from the returned data"""
 
-    r = requests.get("https://www.hikingproject.com/data/get-trails?lat=37.3382&lon=-121.8863&maxDistance=10&key=200214091-fba4863b8895606501a2dbecc5aea6b9")
+    r = requests.get("https://www.hikingproject.com/data/get-trails?lat=37.3382&lon=-121.8863&maxDistance=10&key=hiking_consumer_key")
     trail = r.json()
 
     num_results = trail['trails']
@@ -52,9 +55,6 @@ def add_user_trail():
     new_user_trail = UserTrails(trail_id=trail_id, user_id=user_id, rating=rating)
     db.session.add(new_user_trail)
     db.session.commit()
-
-
-
 
 if __name__ == "__main__":
     # As a convenience, if we run this module interactively, it will leave

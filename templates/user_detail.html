@@ -75,7 +75,8 @@
                     <td>{{ usertrail.rating }}</td>
 
                     <td>
-                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Recommend</button>
+                      <button type="button" class="btn btn-primary btn-sm" data-trail-name="{{ usertrail.trail.name }}" data-target="#myModal" id="rec-button">Recommend
+                      </button>
                     </td>
 
                 </tr>
@@ -102,6 +103,7 @@
             <label for="recipient-name" class="control-label">Recipient Email:</label>
             <input type="text" class="form-control" id="recipient-email">
           </div>
+          <input type="text" id="hidden-trail-name" hidden>
           <div class="form-group">
             <label for="message-text" class="control-label">Message:</label>
             <textarea class="form-control" id="message-text"></textarea>
@@ -110,20 +112,25 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" onclick="sendFunction(this)" class="btn btn-primary">Send</button>
+        <button type="button" onclick="sendFunction(this)" class="btn btn-primary" data-dismiss="modal">Send</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 <script>
   "use strict";
 
   
-  $('#myModal').on('shown.bs.modal', function () {
-      $('#myInput').focus()
+  $('#rec-button').on('click', function (evt) {
+      
+      console.log('show');
+      var trailId = $(this).data('trail-name');
+      $('#hidden-trail-name').val(trailId);
+      console.log(trailId);
+      $('#myModal').modal();
 })
 
   function sendFunction(element) {
@@ -131,9 +138,23 @@
     console.log("hi modal");
     var re_email = $(element).parent().prev().find("#recipient-email").val();
     var message = $(element).parent().prev().find("#message-text").val();
-    
-    console.log(re_email);
+    var trailName = $(element).parent().prev().find('#hidden-trail-name').val();
+    var se_email = "{{ user.email }}";
+
     console.log(message);
+
+    var formInputs = {
+        "trail_name": trailName,
+        "message": message,
+        "re_email": re_email,
+        "se_email": se_email
+    }
+    
+    $.post("/send-email",formInputs) 
+
+    
+    /*$(element).parent().prev().find("#message-text").val('');
+    $(element).parent().prev().find("#recipient-email").val('');*/
 }
 
 
