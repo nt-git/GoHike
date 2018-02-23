@@ -277,14 +277,17 @@ def send_email():
     trail_name = request.form.get("trail_name")
     T_email = request.form.get("re_email")
     F_email = request.form.get("se_email")
-    message = request.form.get("message") + trail_name
-    print message
+    trail_url = request.form.get("trail_url")
+    trail_length = request.form.get("trail_length")
+    custom_message = '<br>' + "Trail Name: " + trail_name + '<br>' + "Trail URL: " + trail_url + '<br>' + "Trail Length: " + trail_length
+    message = request.form.get("message") + custom_message
 
     sg = sendgrid.SendGridAPIClient(apikey=sendgrid_key)
     from_email = Email(F_email)
     to_email = Email(T_email)
     subject = "You got a Trail Recommendtion from GoHike"
-    content = Content("text/plain", message)
+    content = Content("text/html", message)
+
     mail = Mail(from_email, subject, to_email, content)
     try:
         response = sg.client.mail.send.post(request_body=mail.get())
