@@ -146,6 +146,8 @@ class HikeTestsDatabase(unittest.TestCase):
     def test_send_email(self):
         result = self.client.post("/send-email",
                                 data={"trail_name": "test trail",
+                                    "trail_url": "test trail",
+                                    "trail_length": "test trail",
                                     "T_email": "niravtrivedi03@gmail.com",
                                     "F_email": "niravtrivedi03@gmail.com",
                                     "message": "recommending "},
