@@ -74,10 +74,10 @@
 
                     <td>{{ usertrail.rating }}</td>
 
-                    <td>
-                      <button type="button" class="btn btn-primary btn-sm rec-button"  data-trail-name="{{ usertrail.trail.name }}" data-trail-url="{{usertrail.trail.url}}" data-trail-length="{{usertrail.trail.length}}" data-target="#myModal" >Recommend
+                    <td>{% for hike in usertrail.hikes %}
+                      <button type="button" class="btn btn-primary btn-sm rec-button"  data-trail-name="{{ usertrail.trail.name }}" data-trail-url="{{usertrail.trail.url}}" data-trail-length="{{usertrail.trail.length}}" data-hike-id="{{ hike.hike_id }}" data-target="#myModal" >Recommend
                       </button>
-                    </td>
+                    {% endfor%} </td>
 
                 </tr>
                 {% endfor %}
@@ -106,6 +106,7 @@
           <input type="text" id="hidden-trail-name" hidden>
           <input type="text" id="hidden-trail-url" hidden>
           <input type="text" id="hidden-trail-length" hidden>
+          <input type="text" id="hidden-hike-id" hidden>
           <div class="form-group">
             <label for="message-text" class="control-label">Message:</label>
             <textarea class="form-control" id="message-text"></textarea>
@@ -134,7 +135,10 @@
     var trailName = $(element).parent().prev().find('#hidden-trail-name').val();
     var trailURL = $(element).parent().prev().find('#hidden-trail-url').val();
     var trailLength = $(element).parent().prev().find('#hidden-trail-length').val();
+    var hikeId = $(element).parent().prev().find('#hidden-hike-id').val();
+
     var se_email = "{{ user.email }}";
+    var user_name = "{{ user.name }}";
 
     console.log(message);
 
@@ -144,7 +148,9 @@
         "re_email": re_email,
         "se_email": se_email,
         "trail_url": trailURL,
-        "trail_length": trailLength
+        "trail_length": trailLength,
+        "hike_id": hikeId,
+        "user_name": user_name
     }
     
     $.post("/send-email",formInputs) 
@@ -159,9 +165,13 @@ $('.rec-button').on('click', function (evt) {
       var trailId = $(this).data('trail-name');
       var trailURL = $(this).data('trail-url');
       var trailLength = $(this).data('trail-length');
+      var hikeId = $(this).data('hike-id');
+
       $('#hidden-trail-name').val(trailId);
       $('#hidden-trail-url').val(trailURL);
       $('#hidden-trail-length').val(trailLength);
+      $('#hidden-hike-id').val(hikeId);
+
       console.log(trailId);
       $('#myModal').modal();
 })

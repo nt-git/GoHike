@@ -274,12 +274,19 @@ def add_trail_rating_add_to_db():
 def send_email():
     """ Send Email to Receipent """
 
+    hike_id = request.form.get("hike_id")
     trail_name = request.form.get("trail_name")
     T_email = request.form.get("re_email")
     F_email = request.form.get("se_email")
     trail_url = request.form.get("trail_url")
     trail_length = request.form.get("trail_length")
-    custom_message = '<br>' + "Trail Name: " + trail_name + '<br>' + "Trail URL: " + trail_url + '<br>' + "Trail Length: " + trail_length
+    user_name = request.form.get("user_name")
+
+    hike = db.session.query(Hike).filter_by(hike_id=hike_id).first()
+    user_comment = hike.comments
+    user_rating = hike.u_rating
+
+    custom_message = user_name + " is recommending this trail to you" + '<br>' + "Trail Name: " + trail_name + '<br>' + "Trail URL: " + trail_url + '<br>' + "Trail Length: " + trail_length + '<br>' + user_name + "s comment: " + user_comment
     message = request.form.get("message") + custom_message
 
     sg = sendgrid.SendGridAPIClient(apikey=sendgrid_key)
