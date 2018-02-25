@@ -32,6 +32,7 @@ app.jinja_env.undefined = StrictUndefined
 hiking_consumer_key = os.environ['HIKING_CONSUMER_KEY']
 sendgrid_key = os.environ['SENDGRID_KEY']
 
+
 @app.route('/')
 def index():
     """Homepage."""
@@ -292,7 +293,7 @@ def send_email():
     sg = sendgrid.SendGridAPIClient(apikey=sendgrid_key)
     from_email = Email(F_email)
     to_email = Email(T_email)
-    subject = "You got a Trail Recommendtion from GoHike"
+    subject = "Trail Recommendtion from GoHike"
     content = Content("text/html", message)
 
     mail = Mail(from_email, subject, to_email, content)
