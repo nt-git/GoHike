@@ -154,7 +154,26 @@ def user_profile(u_id):
 @app.route("/search", methods=["GET"])
 def search_trails():
     """Search form"""
-    return render_template("search_form.html")
+
+    user = User.query.options(db.joinedload('usertrails', 'trail')).get(session['id'])
+    print user
+
+    usertrail = UserTrail.query.filter_by(user_id = session['id']).all()
+
+
+    #trails = usertrail.group_by('trail_id').having(db.func.count(usertrail.trail_id) > 2)
+
+    # frequently_visited_trails = []
+    # #Find Trails which appears at least 3 times in usertrail table.
+    # if user.usertrails:
+    #     #SELECT trail_id COUNT(*) FROM user.userstrails GROUP BY trail_id HAVING COUNT(*) > 2
+    #         if user.usertrails.count(user.usertrails.trail_id) > 2:
+    #     #trails = user.group_by('trail_id').having(db.func.count(usertrail.trail_id) > 2)
+    #             frequently_visited_trails.append(trail_id)
+
+    #         print frequently_visited_trails
+              
+    return render_template("search_form.html", user=user)
 
 
 @app.route("/search", methods=["POST"])

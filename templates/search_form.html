@@ -19,6 +19,23 @@
     <input type="submit" value="Find Trails">
 </form>
 
+
+<div class="visited-hikes">
+
+    {% if user.usertrails|length == 0 %}
+    <h4>No Hikes yet.</h4>
+    <h4><a href="/search">Plan your Hikes</a>
+    {% else %}
+        <h4>Your frequently visited hikes<h4>
+            
+
+
+    {% endif %}
+</div>
+
+
+
+
 {% endif %}
 
  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=en"></script>

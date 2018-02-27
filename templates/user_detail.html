@@ -16,7 +16,7 @@
             <table class="table table-hover">
                 <tr>
                     <th>Trail Name</th>
-                    <th>Trail URL</th> 
+                    <!-- <th>Trail URL</th> -->
                     <th>Trail Length (miles) </th>
                     <th>Date</th>
                     <th>Comments</th>
@@ -32,8 +32,8 @@
                      {% endfor %}
 
 
-                    <td>{{usertrail.trail.name}}</td>
-                    <td><a href= "">{{usertrail.trail.url}}</a></td>
+                    <td><a href= "{{usertrail.trail.url}}" target="_blank">{{usertrail.trail.name}}</a></td>
+                    <!-- <td><a href= "">{{usertrail.trail.url}}</a></td> -->
                     <td>{{usertrail.trail.length}}</td>
                     <td>{% for hike in usertrail.hikes %}
                             {{hike.date.strftime('%Y-%m-%d')}}
