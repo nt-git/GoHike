@@ -1,19 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>SignIn Form</h2>
+<h2><center>SignIn</center></h2>
 
+
+ <div class="container">
 <form action="/SignIn", method="POST">
-    <div>
-        <b>Please Enter Email:</b> <br>
-        <input type="email" name="email" placeholder="Enter your email here" required>
-    </div> <br>
-    <div>
-        <b>Please Enter Password:</b> <br>
-        <input type="password" name="password" placeholder="Add your password here" required>
-    </div> <br>
-    
-    <input type="submit" value="Sign In">
-</form>
+    <div class="form-group">
 
+        <div class="col-xs-2">
+            <label for="inputEmail">Please Enter Email:</label>
+            <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Enter your email here" required autofocus>
+        </div> 
+
+        <div class="col-xs-2">
+            <label for="inputPassword">Please Enter Password:</label>
+            <input type="password" class="form-control" id="inputPassword" name="password"  placeholder="Enter your password here" required>
+        </div> 
+    
+        <div class="col-xs-2">
+            <input type="submit" class="btn btn-primary" value="Sign In" style="margin-top: 25px">
+        </div>
+    </div>
+</form>
+</div>
 {% endblock %}

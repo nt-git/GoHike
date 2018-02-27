@@ -8,24 +8,41 @@
 
         {% else %}
 
-            <h2>SignUp Form</h2>
+            <h2><center>SignUp</center></h2>
         
+            <div class="container">
+                <form action="/SignUp", method="POST">
+                <!-- <div class="form-group"> -->
 
-            <form action="/SignUp", method="POST">
-            <div>
-                Please Enter Email:<br><input type="email" name="email" placeholder="Enter your email" required>
-            </div> <br>
-            <div>
-                Please Enter Password:<br><input type="password" name="password" placeholder="Enter your password" required>
-            </div> <br>
-            <div>
-                Please Enter Name:<br><input type="text" name="name" placeholder="Enter your name" required>
-            </div> <br>
-            <div>
-                Please Enter Zipcode:<br><input type="text" name="zip" placeholder="Enter your zipcode (optional)">
-            </div> <br>
-                <input type="submit" value="Sign Up">
+
+                    <div class="form-group">
+                        <label for="inputEmail">Please Enter Email:</label>
+                        <input type="email" class="form-control" name="email" placeholder="Enter your email" required autofocus>
+                    </div> 
+
+                     <div class="form-group">
+                        <label for="inputPassword">Please Enter Password:</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter your password" required>
+                    </div> 
+
+                    <div class="form-group">
+                        <label for="inputName">Please Enter User Name:</label>
+                        <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
+                    </div> 
+
+                    <div class="form-group">
+                        <label for="inputZip">Please Enter Zipcode:</label>
+                        <input type="text" name="zip" class="form-control" placeholder="Enter your zipcode (optional)">
+                    </div> 
+                        
+
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Sign Up">
+                    </div>
+
+                <!-- </div> -->
             </form>
+        </div>
 
         {% endif%}
 

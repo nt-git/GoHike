@@ -285,9 +285,15 @@ def send_email():
 
     hike = db.session.query(Hike).filter_by(hike_id=hike_id).first()
     user_comment = hike.comments
-    user_rating = hike.u_rating
+    user_rating = str(hike.u_rating)
 
-    custom_message = user_name + " is recommending this trail to you" + '<br>' + "Trail Name: " + trail_name + '<br>' + "Trail URL: " + trail_url + '<br>' + "Trail Length: " + trail_length + '<br>' + user_name + "s comment: " + user_comment
+
+    custom_message = '<br>' + user_name + " is recommending this trail to you" + '<br>' + "Trail Name: " + trail_name + '<br>' + "Trail URL: " + trail_url + '<br>' + "Trail Length: " + trail_length + " miles" + '<br>' + user_name + "s comment: " + user_comment + '<br>'+ user_name + "s rating: " + user_rating
+    message = request.form.get("message") + custom_message
+
+    sg = sendgrid.SendGridAPIClient(apikey=sendgrid_key)
+    from_email = Email(F_email)
+    to_email = Email(T_email)
     message = request.form.get("message") + custom_message
 
     sg = sendgrid.SendGridAPIClient(apikey=sendgrid_key)

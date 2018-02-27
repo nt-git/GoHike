@@ -72,6 +72,8 @@
 
         bounds  = new google.maps.LatLngBounds();
 
+        var image_url = 'static/images/mountain-hiking-trail-ol-512.png'
+
         {% for i in range(number) %}
 
         var i = new google.maps.LatLng({{ num_results[i].get('latitude') }}, {{ num_results[i].get('longitude') }});
@@ -79,8 +81,9 @@
         var marker = new google.maps.Marker({
         position: i,
         map: map,
+        icon: image_url,
         title: '{{ num_results[i].get('name') }}'
-        
+
         });
 
         {% endfor %}
