@@ -44,7 +44,7 @@
                             {% if not hike.comments %}
                             <span class="comment-span">
                             <input type="text" name="comments" placeholder="add your comments here" id="comments-{{ usertrail.trail.trail_id }}">
-                            <button class="comment-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}" >Add</button>
+                            <button class="btn btn-primary btn-sm comment-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}" >Add</button>
                             </span><br>
 
                         {% else %}
@@ -52,7 +52,7 @@
                                 <span class="comment-span"> 
                                   <span>{{hike.comments}}</span> 
                                 <!-- <input id="get-edit-comment" value="{{hike.comments}}" hidden>-->
-                                  <button class="edit-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}">Edit</button>
+                                  <button class="btn btn-primary btn-sm edit-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}">Edit</button>
                                 </span>
                             {% endfor %}    
                         {% endif %}</td>
@@ -62,7 +62,7 @@
                             {% if not hike.u_rating%}
                                  <span class="rating-span">
                                  <input type="number" name="your-rating" step="0.5" min="1" max="5" data-hike-id="{{ hike.hike_id }}">
-                                 <button class="rate-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}" > Rate </button>
+                                 <button class="btn btn-primary btn-sm rate-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}" > Rate </button>
                                  </span>
                             {% else %}
                                 {% for hike in usertrail.hikes %}

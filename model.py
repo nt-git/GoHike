@@ -169,7 +169,7 @@ def example_data():
     u2 = User(name="Test1", email="exciting@hb.com", zipcode=12345, password=1234)
     t1 = Trail(name="test trail", url="www.testtrail.com")
     ut1 = UserTrail(user_id=1, trail_id=1)
-    h1 = Hike(usertrail_id=1, date="2018-12-02")
+    h1 = Hike(usertrail_id=1, date="2018-12-02", comments="comments", u_rating=2.5)
     db.session.add_all([u1, u2, t1, ut1, h1])
     db.session.commit()
 

@@ -1,22 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Search Trails</h2>
+<h2><center>Search Trails</center></h2>
 
 {%if "id" not in session %}
         <a href="/SignIn"> You are not Signed In. Please Sign In to search your trails</a>
 
 {% else %}
+
+<div class="container">
 <form action="/search", method="POST">
-    <div>
-        <input type="text" name="zipcode" placeholder="Enter your zipcode here">
-    &nbsp;&nbsp;&nbsp; OR &nbsp;&nbsp;&nbsp; <input type="text" name="location" placeholder="Enter known Location here" id="autocomplete"/>
-    </div><br>
-    <div>
-        Select the number of trails you want to see in your search: <input type="number" name="trail_num" step="10" min="10" max="100">
-    </div><br>
+
+    <div class="col-xs-2">
+        <label for="inputZipcode">Please Enter Zipcode:</label>
+        <input type="text" class="form-control" name="zipcode" placeholder="Enter your zipcode here" autofocus>
+    </div>
+
+    <div class="col-xs-2">
+        <label for="inputLocation">Please Enter Location:</label> 
+        <input type="text" class="form-control" name="location" placeholder="Enter known Location here" id="autocomplete"/>
+    </div> <br>
+
+    <div class="form-group">
+        <label for="inputZip">Select the number of trails you want to see in your search:</label>
+        <input type="number" class="form-control" name="trail_num" step="10" min="10" max="100">
+    </div> 
     
-    <input type="submit" value="Find Trails">
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Find Trails">
+    </div>
 </form>
 
 
@@ -26,15 +38,14 @@
     <h4>No Hikes yet.</h4>
     <h4><a href="/search">Plan your Hikes</a>
     {% else %}
-        <h4>Your frequently visited hikes<h4>
-            
-
+        <h4>Your frequently visited trails<h4>
+            {%for trail in trail_list%}
+                <h4> <a href= "{{trail.url}}" target="_blank"> {{trail.name}} </a>  {{trail.length}} miles 
+            {% endfor %}
 
     {% endif %}
 </div>
-
-
-
+</div>
 
 {% endif %}
 

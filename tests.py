@@ -20,12 +20,7 @@ class HikeTests(unittest.TestCase):
         self.assertIn("SignIn", result.data)
         self.assertNotIn("Logout", result.data)
 
-    def test_search(self):
-        #search without signin in
-        result = self.client.get("/search")
-        self.assertNotIn("Select", result.data)
-        self.assertIn("Signed In", result.data)
-
+    
     def test_signin_yet(self):
         result = self.client.get("/SignIn")
         self.assertIn("SignIn", result.data)
@@ -65,6 +60,13 @@ class HikeTestsDatabase(unittest.TestCase):
         # (uncomment when testing database)
         db.session.close()
         db.drop_all()
+
+    def test_search(self):
+        #search without signin in
+        result = self.client.get("/search")
+        self.assertIn("Enter", result.data)
+        self.assertNotIn("Signed In", result.data)
+
 
     def test_user_profile(self):
         #FIXME: test that the user page displays the user from example_data()
@@ -125,7 +127,7 @@ class HikeTestsDatabase(unittest.TestCase):
     def test_get_comment_info(self):
         result = self.client.post("/add-trails-comment",
                                 data={"trail_id": "1",
-                                      "comment": "abcd",
+                                      "comments": "abcd",
                                       "hike_id": "1"},
                                       follow_redirects=True)
 
@@ -147,10 +149,12 @@ class HikeTestsDatabase(unittest.TestCase):
         result = self.client.post("/send-email",
                                 data={"trail_name": "test trail",
                                     "trail_url": "test trail",
+                                    "hike_id": "1",
                                     "trail_length": "test trail",
                                     "T_email": "niravtrivedi03@gmail.com",
                                     "F_email": "niravtrivedi03@gmail.com",
-                                    "message": "recommending "},
+                                    "message": "recommending ",
+                                    "user_name": "user_name"},
                                     follow_redirects=True)
         result_json_data = json.loads(result.data)
         self.assertEqual(result_json_data['trail_name'],"test trail")

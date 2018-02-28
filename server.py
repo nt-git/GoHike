@@ -16,6 +16,7 @@ import dateutil.parser
 import hashlib
 import sendgrid
 from sendgrid.helpers.mail import *
+from sqlalchemy import func
 
 
 app = Flask(__name__)
@@ -156,24 +157,14 @@ def search_trails():
     """Search form"""
 
     user = User.query.options(db.joinedload('usertrails', 'trail')).get(session['id'])
-    print user
+    trails = db.session.query(UserTrail.trail_id).group_by(UserTrail.trail_id).having(func.count(UserTrail.trail_id) > 2).filter(UserTrail.user_id == session['id']).all()
 
-    usertrail = UserTrail.query.filter_by(user_id = session['id']).all()
+    frequently_visited_trails = []
+    for trail in trails:
+        trail_record = Trail.query.filter_by(trail_id=trail).first()
+        frequently_visited_trails.append(trail_record)
 
-
-    #trails = usertrail.group_by('trail_id').having(db.func.count(usertrail.trail_id) > 2)
-
-    # frequently_visited_trails = []
-    # #Find Trails which appears at least 3 times in usertrail table.
-    # if user.usertrails:
-    #     #SELECT trail_id COUNT(*) FROM user.userstrails GROUP BY trail_id HAVING COUNT(*) > 2
-    #         if user.usertrails.count(user.usertrails.trail_id) > 2:
-    #     #trails = user.group_by('trail_id').having(db.func.count(usertrail.trail_id) > 2)
-    #             frequently_visited_trails.append(trail_id)
-
-    #         print frequently_visited_trails
-              
-    return render_template("search_form.html", user=user)
+    return render_template("search_form.html", user=user, trail_list=frequently_visited_trails)
 
 
 @app.route("/search", methods=["POST"])
@@ -303,9 +294,10 @@ def send_email():
     user_name = request.form.get("user_name")
 
     hike = db.session.query(Hike).filter_by(hike_id=hike_id).first()
+
+
     user_comment = hike.comments
     user_rating = str(hike.u_rating)
-
 
     custom_message = '<br>' + user_name + " is recommending this trail to you" + '<br>' + "Trail Name: " + trail_name + '<br>' + "Trail URL: " + trail_url + '<br>' + "Trail Length: " + trail_length + " miles" + '<br>' + user_name + "s comment: " + user_comment + '<br>'+ user_name + "s rating: " + user_rating
     message = request.form.get("message") + custom_message
