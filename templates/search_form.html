@@ -21,14 +21,19 @@
         <input type="text" class="form-control" name="location" placeholder="Enter known Location here" id="autocomplete"/>
     </div> <br>
 
+    <div class="row">
     <div class="form-group">
         <label for="inputZip">Select the number of trails you want to see in your search:</label>
         <input type="number" class="form-control" name="trail_num" step="10" min="10" max="100">
     </div> 
-    
+    </div>
+
+    <div class="row">
     <div class="form-group">
         <input type="submit" class="btn btn-primary" value="Find Trails">
     </div>
+    </div>
+
 </form>
 
 
@@ -38,7 +43,7 @@
     <h4>No Hikes yet.</h4>
     <h4><a href="/search">Plan your Hikes</a>
     {% else %}
-        <h4>Your frequently visited trails<h4>
+        <h4>{{user.name}} , your frequently visited trails are: <h4>
             {%for trail in trail_list%}
                 <h4> <a href= "{{trail.url}}" target="_blank"> {{trail.name}} </a>  {{trail.length}} miles 
             {% endfor %}

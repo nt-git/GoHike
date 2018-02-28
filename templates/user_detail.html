@@ -199,7 +199,7 @@ $('.rec-button').on('click', function (evt) {
     
     $.post("/add-trails-comment",formInputs, showInfo);
 
-    $(this).attr("class", "edit-it")
+    $(this).attr("class", "btn btn-primary btn-sm edit-it")
     $(this).html("Edit")
     $(this).prev().remove()    
     $(this).before("<span>" +comments+ "</span>")
@@ -225,7 +225,7 @@ $('.rec-button').on('click', function (evt) {
     $(this).prev().remove();
     $(this).before("<input type='text'>");
     $(this).prev().val(old_comments);
-    $(this).attr("class", "comment-it");
+    $(this).attr("class", "btn btn-primary btn-sm comment-it");
     $(this).html("Add");
     var comments = $(this).prev().val()
     console.log(comments)
