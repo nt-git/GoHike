@@ -10,27 +10,32 @@
 
 <div class="container">
 <form action="/search", method="POST">
-
-    <div class="col-xs-2">
+    <div class="row">
+    <div class="col-xs-3">
         <label for="inputZipcode">Please Enter Zipcode:</label>
         <input type="text" class="form-control" name="zipcode" placeholder="Enter your zipcode here" autofocus>
     </div>
 
-    <div class="col-xs-2">
+    <div class="col-xs-3">
         <label for="inputLocation">Please Enter Location:</label> 
         <input type="text" class="form-control" name="location" placeholder="Enter known Location here" id="autocomplete"/>
-    </div> <br>
-
-    <div class="row">
-    <div class="form-group">
-        <label for="inputZip">Select the number of trails you want to see in your search:</label>
-        <input type="number" class="form-control" name="trail_num" step="10" min="10" max="100">
     </div> 
     </div>
 
     <div class="row">
+        <div class="col-xs-6">
+    <div class="form-group search">
+        <label for="inputZip">Select the number of trails you want to see in your search:</label>
+        <input type="number" class="form-control" name="trail_num" step="10" min="10" max="100">
+    </div> 
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
     <div class="form-group">
         <input type="submit" class="btn btn-primary" value="Find Trails">
+    </div>
     </div>
     </div>
 
