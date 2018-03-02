@@ -95,6 +95,9 @@ def user_sign_up():
         db.session.commit()
 
         flash("Registered successfully!")
+
+        new_user = User.query.filter_by(email=email).first()
+        session['id'] = new_user.user_id
         return redirect('/search')
 
 
@@ -126,22 +129,22 @@ def user_profile(u_id):
                 date = hike.date
 
                 if date.month == 1:
-                    len_jan = len_jan + hike.usertrail.trail.length
+                    len_jan = float(len_jan + hike.usertrail.trail.length)
                     num_jan = num_jan + 1
                 elif date.month == 2:
-                    len_feb = len_feb + hike.usertrail.trail.length
+                    len_feb = float(len_feb + hike.usertrail.trail.length)
                     num_feb = num_feb + 1
                 elif date.month == 3:
-                    len_march = len_march + hike.usertrail.trail.length
+                    len_march = float(len_march + hike.usertrail.trail.length)
                     num_march = num_march + 1
                 elif date.month == 4:
-                    len_april = len_april + hike.usertrail.trail.length
+                    len_april = float(len_april + hike.usertrail.trail.length)
                     num_april = num_april + 1
                 elif date.month == 5:
-                    len_may = len_may + hike.usertrail.trail.length
+                    len_may = float(len_may + hike.usertrail.trail.length)
                     num_may = num_may + 1
                 elif date.month == 6:
-                    len_june = len_june + hike.usertrail.trail.length
+                    len_june = float(len_june + hike.usertrail.trail.length)
                     num_june = num_june + 1
 
         hike_num_list = [num_jan, num_feb, num_march, num_april, num_may, num_june]
@@ -155,14 +158,14 @@ def user_profile(u_id):
 @app.route("/search", methods=["GET"])
 def search_trails():
     """Search form"""
+    if session['id']:
+        user = User.query.options(db.joinedload('usertrails', 'trail')).get(session['id'])
+        trails = db.session.query(UserTrail.trail_id).group_by(UserTrail.trail_id).having(func.count(UserTrail.trail_id) > 2).filter(UserTrail.user_id == session['id']).all()
 
-    user = User.query.options(db.joinedload('usertrails', 'trail')).get(session['id'])
-    trails = db.session.query(UserTrail.trail_id).group_by(UserTrail.trail_id).having(func.count(UserTrail.trail_id) > 2).filter(UserTrail.user_id == session['id']).all()
-
-    frequently_visited_trails = []
-    for trail in trails:
-        trail_record = Trail.query.filter_by(trail_id=trail).first()
-        frequently_visited_trails.append(trail_record)
+        frequently_visited_trails = []
+        for trail in trails:
+            trail_record = Trail.query.filter_by(trail_id=trail).first()
+            frequently_visited_trails.append(trail_record)
 
     return render_template("search_form.html", user=user, trail_list=frequently_visited_trails)
 
