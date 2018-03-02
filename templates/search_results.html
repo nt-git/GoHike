@@ -1,8 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    
+    <head>
+    <title>Geocoding service</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 400px;
+        width: 1200px;
+      }
 
+    </style>
+  </head>
+ <body>
 <!-- Create a div for every Trail using a Jinja for loop -->
 <div class='trail-div'>
 
@@ -11,7 +24,7 @@
                 <tr>
                     <th>Trail Name</th>
                     <th>Plan Hike</th> 
-                    <th>Trail URL</th>
+                    <!-- <th>Trail URL</th> -->
                     <th>Location</th>
                     <th>Trail Summary</th>
                     <th>Trail Image</th>
@@ -20,7 +33,7 @@
 
     {% for i in range(number) %}
     <tr>
-        <td>{{ num_results[i].get('name') }}  &nbsp;  
+        <td><a href= "{{ num_results[i].get('url') }}" target="_blank">{{ num_results[i].get('name') }}</a> &nbsp;  
             {% if num_results[i].get('name') in visited_names  %}
                 <h4>You have already visited this trail<h4>
             {% endif %}</td>
@@ -30,7 +43,7 @@
             Enter Date: <input type="date" name="date" id="date-time">
         </span></td>
         
-        <td><a href= "">{{ num_results[i].get('url') }}</td>
+        <!-- <td><a href= "">{{ num_results[i].get('url') }}</td> -->
         <td>{{ num_results[i].get('location') }} </td>
         <td>{{ num_results[i].get('summary') }} </td>
        <td><img src="{{ num_results[i].get('imgSqSmall') }}" ></td>
@@ -43,53 +56,52 @@
 
  </div>  
 
- <head>
-    <title>Geocoding service</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 500px;
-        width: 800px;
-      }
-
-    </style>
-  </head>
-  <body>
-
     <div id="map"></div>
     <script>
+      var marker;
       function initMap() {
         
         var myLatLng = {lat: {{lat}}, lng: {{lng}} };
 
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 8,
-          center: myLatLng
+          zoom: 4,
+          center: myLatLng,
+          gestureHandling: 'cooperative'
         });
 
-        bounds  = new google.maps.LatLngBounds();
+        var bounds  = new google.maps.LatLngBounds();
 
-        var image_url = 'static/images/mountain-hiking-trail-ol-512.png'
+        var image_url = 'static/images/hiking_image.png'
+
+        var trail_list = []
 
         {% for i in range(number) %}
 
-        var i = new google.maps.LatLng({{ num_results[i].get('latitude') }}, {{ num_results[i].get('longitude') }});
-        bounds.extend(i);
-        var marker = new google.maps.Marker({
-        position: i,
-        map: map,
-        icon: image_url,
-        title: '{{ num_results[i].get('name') }}'
+          var detail = {trail_name: "{{ num_results[i].get('name') }}", lat: "{{ num_results[i].get('latitude') }}", lon: "{{ num_results[i].get('longitude') }}" };
+          trail_list.push(detail)
+        
+        {% endfor %}
+
+        console.log(trail_list);
+
+        for (let trail of trail_list) {
+
+            let i = new google.maps.LatLng(trail.lat, trail.lon);
+        
+            bounds.extend(i);
+            // console.log(i);
+
+            let marker = new google.maps.Marker({
+            position: i,
+            map: map,
+            icon: image_url,
+            title: trail.trail_name
 
         });
 
-        {% endfor %}
+        }
 
         map.fitBounds(bounds);
-        map.panToBounds(bounds);
 
       }
 

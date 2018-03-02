@@ -297,11 +297,13 @@ $('.rec-button').on('click', function (evt) {
         {
           label: "number of hikes",
           backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          //yAxisID: "y-axis-1",
           data: {{ hike_num_list }}
         },
         {
           label: "total miles hiked",
           backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          //yAxisID: "y-axis-0",
           data: {{ hike_len_list }}
         }
       ]
@@ -312,6 +314,35 @@ $('.rec-button').on('click', function (evt) {
         display: true,
         text: 'Number of hikes in each month'
       }
+      /*scales: {
+        xAxes: [{
+         display: true,
+         ticks: {
+            maxTicksLimit: 6,
+            fontSize: 10
+         }
+      }],
+        yAxes: [{
+         position: "left",
+         "id": "y-axis-0",
+         display: true,
+         ticks: {
+            steps: 10,
+            stepValue: 1,
+            
+         }
+      }, {
+         position: "right",
+         "id": "y-axis-1",
+         display: true,
+         ticks: {
+            steps: 10,
+            stepValue: 20,
+            
+         }
+      }]
+   }*/
+      
     }
 });
 

@@ -17,7 +17,7 @@ import hashlib
 import sendgrid
 from sendgrid.helpers.mail import *
 from sqlalchemy import func
-
+from pprint import pprint
 
 app = Flask(__name__)
 
@@ -299,7 +299,7 @@ def send_email():
     user_comment = hike.comments
     user_rating = str(hike.u_rating)
 
-    custom_message = '<br>' + user_name + " is recommending this trail to you" + '<br>' + "Trail Name: " + trail_name + '<br>' + "Trail URL: " + trail_url + '<br>' + "Trail Length: " + trail_length + " miles" + '<br>' + user_name + "s comment: " + user_comment + '<br>'+ user_name + "s rating: " + user_rating
+    custom_message = '<br>' + user_name + " is recommending this trail to you" + '<br>' + "Trail Name: " + trail_name + '<br>' + "Trail URL: " + trail_url + '<br>' + "Trail Length: " + trail_length + " miles" + '<br>' + user_name + "\'s comment: " + user_comment + '<br>'+ user_name + "\'s rating: " + user_rating
     message = request.form.get("message") + custom_message
 
     sg = sendgrid.SendGridAPIClient(apikey=sendgrid_key)
