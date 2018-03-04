@@ -129,30 +129,51 @@ def user_profile(u_id):
                 date = hike.date
 
                 if date.month == 1:
-                    len_jan = float(len_jan + hike.usertrail.trail.length)
+                    len_jan = float("{0:.2f}".format(len_jan + hike.usertrail.trail.length))
                     num_jan = num_jan + 1
                 elif date.month == 2:
-                    len_feb = float(len_feb + hike.usertrail.trail.length)
+                    len_feb = float("{0:.2f}".format(len_feb + hike.usertrail.trail.length))
+                    #len_feb = float(len_feb + hike.usertrail.trail.length)
                     num_feb = num_feb + 1
                 elif date.month == 3:
-                    len_march = float(len_march + hike.usertrail.trail.length)
+                    len_march = float("{0:.2f}".format(len_march + hike.usertrail.trail.length))
                     num_march = num_march + 1
                 elif date.month == 4:
-                    len_april = float(len_april + hike.usertrail.trail.length)
+                    len_april = float("{0:.2f}".format(len_april + hike.usertrail.trail.length))
                     num_april = num_april + 1
                 elif date.month == 5:
-                    len_may = float(len_may + hike.usertrail.trail.length)
+                    len_may = float("{0:.2f}".format(len_may + hike.usertrail.trail.length))
                     num_may = num_may + 1
                 elif date.month == 6:
-                    len_june = float(len_june + hike.usertrail.trail.length)
+                    len_june = float("{0:.2f}".format(len_june + hike.usertrail.trail.length))
                     num_june = num_june + 1
 
         hike_num_list = [num_jan, num_feb, num_march, num_april, num_may, num_june]
         hike_len_list = [len_jan, len_feb, len_march, len_april, len_may, len_june]
 
+    visited_trail_names = [usertrail.trail.name for usertrail in user.usertrails]
+    unique_visited = list(set(visited_trail_names))
+
+    list_lat = []
+    list_lng = []
+
+    for trail in unique_visited:
+        place = geocoder.google(str(trail))
+        place_lat = str(place.lat)
+        place_lng = str(place.lng)     
+        list_lat.append(float(place_lat))
+        list_lng.append(float(place_lng))
+
+    average_lat = sum(list_lat) / len(list_lat)
+    average_lng = sum(list_lng) / len(list_lng)
+    number = len(unique_visited)
+    print unique_visited
+    print list_lat
+    print list_lng
+
     #Collect data for CharJs that how many miles hiked in each month - so check hike list for the user for each month and calculate lenght
 
-    return render_template("user_detail.html", user=user, hike_num_list=hike_num_list, hike_len_list=hike_len_list)
+    return render_template("user_detail.html", user=user, hike_num_list=hike_num_list, hike_len_list=hike_len_list, list_lat=list_lat, list_lng=list_lng, number=number, average_lng=average_lng, average_lat=average_lat, unique_visited=unique_visited)
 
 
 @app.route("/search", methods=["GET"])

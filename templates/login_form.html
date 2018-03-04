@@ -6,21 +6,18 @@
 
  <div class="container">
 <form action="/SignIn", method="POST">
-    <div class="form-group" >
+    <div class="form-group row" >
+       
+            <div class="col-xs-4 col-xs-offset-4">
+                <label for="inputEmail">Please Enter Email:</label>
+                <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Enter your email here" required autofocus>
+                <br>
+                <label for="inputPassword">Please Enter Password:</label>
+                <input type="password" class="form-control" id="inputPassword" name="password"  placeholder="Enter your password here" required>
 
-        <div class="col-xs-4">
-            <label for="inputEmail">Please Enter Email:</label>
-            <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Enter your email here" required autofocus>
-        </div> 
+                <input type="submit" class="btn btn-primary" value="Sign In" style="margin-top: 25px">
+            </div>
 
-        <div class="col-xs-4">
-            <label for="inputPassword">Please Enter Password:</label>
-            <input type="password" class="form-control" id="inputPassword" name="password"  placeholder="Enter your password here" required>
-        </div> 
-    
-        <div class="col-xs-4">
-            <input type="submit" class="btn btn-primary" value="Sign In" style="margin-top: 25px">
-        </div>
     </div>
 </form>
 </div>

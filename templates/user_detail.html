@@ -1,9 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<head>
+    <title>Geocoding service</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 400px;
+        width: 600px;
+      }
+
+    </style>
+  </head>
+
+
+
   <h3><center>Welcome, {{user.name}}!</center></h3> 
 
- <h2><center>Your Hike List</center></h2>
+ <h3><center>Your Hike List</center></h3>
 
 
  <div class='hike-div'>
@@ -281,18 +298,21 @@ $('.rec-button').on('click', function (evt) {
 
 </script>
 
+
  <script src=
   "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js">
     </script>
-    <canvas id="bar-chart" width="800" height="250"></canvas> 
-
+    <div class="row">
+    <div class="col-xs-6">
+    <canvas id="bar-chart" width="800" height="500"></canvas> 
+    </div>
  <script>
     "use strict";
     // Bar chart
     new Chart(document.getElementById("bar-chart"), {
     type: 'bar',
     data: {
-      labels: ["January", "February", "March", "April", "May", "June", "July", "August"],
+      labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       datasets: [
         {
           label: "number of hikes",
@@ -312,7 +332,7 @@ $('.rec-button').on('click', function (evt) {
       legend: { display: false },
       title: {
         display: true,
-        text: 'Number of hikes in each month'
+        text: 'Number of hikes and number of miles in each month'
       }
       /*scales: {
         xAxes: [{
@@ -347,6 +367,67 @@ $('.rec-button').on('click', function (evt) {
 });
 
 </script>  
+
+
+<div class="col-xs-6">
+<div id="map"></div>
+</div>
+</div>
+    <script>
+      var marker;
+      function initMap() {
+        
+        var myLatLng = { lat: {{average_lat}}, lng: {{average_lng}}};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: myLatLng,
+          gestureHandling: 'cooperative'
+        });
+
+
+        bounds  = new google.maps.LatLngBounds();
+
+        var image_url = '/static/images/hiking_image.png'
+
+        var trail_list = []
+
+        {% for i in range(number) %}
+          var detail = {trail_name: "{{ unique_visited[i] }}", lat: "{{ list_lat[i] }}", lon: "{{ list_lng[i] }}" };
+          trail_list.push(detail)
+        
+        {% endfor %}
+
+        console.log(trail_list)
+
+        for (let trail of trail_list) {
+
+          var i = new google.maps.LatLng(trail.lat, trail.lon);
+        
+  
+          bounds.extend(i);
+
+          var marker = new google.maps.Marker({
+            position: i,
+            map: map,
+            icon: image_url,
+            title: trail.trail_name
+
+        });
+
+        }
+
+
+        map.fitBounds(bounds);
+        /*map.panToBounds(bounds);*/
+
+      }
+
+
+    </script>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeD1vIu0C2hIMeiLWDD0_4L28Mj8A4YyM&callback=initMap">
+    </script>
 
 
 {% endblock %}
