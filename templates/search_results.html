@@ -9,11 +9,11 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 1200px;
+        height: 1300px;
         width: 400px;
       }
 
-      body {
+     /* body {
      margin: 0;
      padding: 0;
      background: url("/static/images/pexels-photo-519403.jpeg");
@@ -22,12 +22,18 @@
      background-attachment: fixed;
      font-family: sans-serif;
 
+   }*/
+   th {
+    font-size: 17px;
+    color: #f05b24 ;
    }
 
     </style>
   </head>
  <body>
 <!-- Create a div for every Trail using a Jinja for loop -->
+<h3><center>{{user.name}}, Here are all the trails we found for you!</center></h3> 
+
 <div class="row">
 <div class="col-xs-8">
 <div class='trail-div'>
@@ -38,7 +44,7 @@
                     <th>Trail Name</th>
                     <th>Plan Hike</th> 
                     <!-- <th>Trail URL</th> -->
-                    <th>Location</th>
+                    <th >Location</th>
                     <th>Trail Summary</th>
                     <th>Trail Image</th>
                 </tr>

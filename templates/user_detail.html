@@ -13,7 +13,7 @@
         width: 600px;
       }
 
-      body {
+     /* body {
      margin: 0;
      padding: 0;
      background: url("/static/images/pexels-photo-519403.jpeg");
@@ -22,6 +22,11 @@
      background-attachment: fixed;
      font-family: sans-serif;
 
+   }*/
+
+   th {
+    font-size: 17px;
+    color: #f05b24 ;
    }
 
     </style>
@@ -29,9 +34,9 @@
 
 
 
-  <h3><center>Welcome, {{user.name}}!</center></h3> 
+  <h3><center>Welcome, {{user.name}}! Let's take a look at your hike list! </center></h3> 
 
- <h3><center>Your Hike List</center></h3>
+ 
 
 
  <div class='hike-div'>
@@ -72,7 +77,7 @@
                             {% if not hike.comments %}
                             <span class="comment-span">
                             <input type="text" name="comments" placeholder="add your comments here" id="comments-{{ usertrail.trail.trail_id }}">
-                            <button class="btn btn-primary btn-sm comment-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}" >Add</button>
+                            <button class="btn btn-info btn-sm comment-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}" >Add</button>
                             </span><br>
 
                         {% else %}
@@ -80,7 +85,7 @@
                                 <span class="comment-span"> 
                                   <span>{{hike.comments}}</span> 
                                 <!-- <input id="get-edit-comment" value="{{hike.comments}}" hidden>-->
-                                  &nbsp;<button class="btn btn-primary btn-sm edit-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}"><i class="fas fa-pencil-alt"></i></button>
+                                  &nbsp;<button class="btn btn-info btn-sm edit-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}"><i class="fas fa-pencil-alt"></i></button>
                                 </span>
                             {% endfor %}    
                         {% endif %}</td>
@@ -90,7 +95,7 @@
                             {% if not hike.u_rating%}
                                  <span class="rating-span">
                                  <input type="number" name="your-rating" step="0.5" min="1" max="5" data-hike-id="{{ hike.hike_id }}">
-                                 <button class="btn btn-primary btn-sm rate-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}" > Rate </button>
+                                 <button class="btn btn-info btn-sm rate-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}" > Rate </button>
                                  </span>
                             {% else %}
                                 {% for hike in usertrail.hikes %}
@@ -103,7 +108,7 @@
                     <td>{{ usertrail.rating }}</td>
 
                     <td>{% for hike in usertrail.hikes %}
-                      <button type="button" class="btn btn-primary btn-sm rec-button"  data-trail-name="{{ usertrail.trail.name }}" data-trail-url="{{usertrail.trail.url}}" data-trail-length="{{usertrail.trail.length}}" data-hike-id="{{ hike.hike_id }}" data-target="#myModal" >Recommend
+                      <button type="button" class="btn btn-info btn-sm rec-button"  data-trail-name="{{ usertrail.trail.name }}" data-trail-url="{{usertrail.trail.url}}" data-trail-length="{{usertrail.trail.length}}" data-hike-id="{{ hike.hike_id }}" data-target="#myModal" >Recommend
                       </button>
                     {% endfor%} </td>
 
