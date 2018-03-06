@@ -69,7 +69,7 @@
                                 <span class="comment-span"> 
                                   <span>{{hike.comments}}</span> 
                                 <!-- <input id="get-edit-comment" value="{{hike.comments}}" hidden>-->
-                                  <button class="btn btn-primary btn-sm edit-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}">Edit</button>
+                                  &nbsp;<button class="btn btn-primary btn-sm edit-it" data-trail-id="{{ usertrail.trail.trail_id }}" data-hike-id="{{ hike.hike_id }}"><i class="fas fa-pencil-alt"></i></button>
                                 </span>
                             {% endfor %}    
                         {% endif %}</td>
@@ -217,9 +217,9 @@ $('.rec-button').on('click', function (evt) {
     $.post("/add-trails-comment",formInputs, showInfo);
 
     $(this).attr("class", "btn btn-primary btn-sm edit-it")
-    $(this).html("Edit")
+    $(this).html('<i class="fas fa-pencil-alt"></i>')
     $(this).prev().remove()    
-    $(this).before("<span>" +comments+ "</span>")
+    $(this).before("<span>" +comments+ "</span>&nbsp;&nbsp;")
 
   }
 
