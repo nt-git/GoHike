@@ -1,7 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2><center>Search Trails</center></h2>
+<style>
+body {
+     margin: 0;
+     padding: 0;
+     background: url("/static/images/pexels-photo-519403.jpeg");
+     background-size: cover;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     font-family: sans-serif;
+
+   }
+
+</style>
+
+
+<h3><center>Search Trails</center></h3>
 
 {%if "id" not in session %}
         <a href="/SignIn"> You are not Signed In. Please Sign In to search your trails</a>
@@ -14,12 +29,12 @@
     <div class = "search-form">
     <div class="row">
     <div class="col-xs-3 col-xs-offset-3">
-        <label for="inputZipcode">Please enter zipcode:</label>
+        <label for="inputZipcode">Enter your zipcode:</label>
         <input type="text" class="form-control" name="zipcode" placeholder="Enter your zipcode here" autofocus> 
     </div>
 
     <div class="col-xs-3">
-        <label for="inputLocation">Please enter location:</label> 
+        <label for="inputLocation">Enter your location:</label> 
         <input type="text" class="form-control" name="location" placeholder="Enter known Location here" id="autocomplete"/>
     </div> 
     </div>

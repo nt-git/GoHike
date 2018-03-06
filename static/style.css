@@ -18,6 +18,7 @@
 
 }
 
+
 .search{
     margin-top: 20px;
 }
@@ -26,6 +27,3 @@
     text-align: center;
 }
 
-#landing-page{
-    background-image:url('/static/images/pexels-photo-915972.jpeg');
-}

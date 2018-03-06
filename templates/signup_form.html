@@ -1,5 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+<style>
+body {
+     margin: 0;
+     padding: 0;
+     background: url("/static/images/pexels-photo-519403.jpeg");
+     background-size: cover;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     font-family: sans-serif;
+
+   }
+
+</style>
 
 
 
@@ -8,7 +21,7 @@
 
         {% else %}
 
-            <h2><center>Sign Up</center></h2>
+            <h3><center>Sign Up</center></h3>
         
             <div class="container">
                 <form action="/SignUp", method="POST">
@@ -18,7 +31,7 @@
                     <div class="row">
                     <div class="col-xs-6 col-xs-offset-3">
                     <div class="form-group">
-                        <label for="inputEmail">Please enter email:</label>
+                        <label for="inputEmail">Enter your contact email:</label>
                         <input type="email" class="form-control" name="email" placeholder="Enter your email" required autofocus>
                     </div> 
                     </div>
@@ -28,7 +41,7 @@
                      <div class="row">
                      <div class="col-xs-6 col-xs-offset-3">
                      <div class="form-group">
-                        <label for="inputPassword">Please enter password:</label>
+                        <label for="inputPassword">Choose a password:</label>
                         <input type="password" class="form-control" name="password" placeholder="Enter your password" required>
                     </div> 
                     </div>
@@ -38,7 +51,7 @@
                     <div class="row">
                     <div class="col-xs-6 col-xs-offset-3">
                     <div class="form-group">
-                        <label for="inputName">Please enter User name:</label>
+                        <label for="inputName">Choose a username:</label>
                         <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
                     </div> 
                     </div>
@@ -48,7 +61,7 @@
                     <div class="row">
                     <div class="col-xs-6 col-xs-offset-3">
                     <div class="form-group">
-                        <label for="inputZip">Please enter zipcode:</label>
+                        <label for="inputZip">Enter your zipcode:</label>
                         <input type="text" name="zip" class="form-control" placeholder="Enter your zipcode (optional)">
                     </div> 
                     </div>
