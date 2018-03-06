@@ -63,7 +63,7 @@
 
     {% if trail_list|length != 0 %}
     
-        <h4>{{user.name}} , your frequently visited trails are: <h4>
+        <h4>{{user.name}}, your frequently visited trail(s): <h4>
             {%for trail in trail_list%}
                 <h4> <a href= "{{trail.url}}" target="_blank"> {{trail.name}} </a>  {{trail.length}} miles 
             {% endfor %}
