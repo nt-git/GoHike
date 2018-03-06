@@ -17,6 +17,8 @@ import hashlib
 import sendgrid
 from sendgrid.helpers.mail import *
 from sqlalchemy import func
+from geopy.geocoders import Nominatim
+
 
 app = Flask(__name__)
 
@@ -159,7 +161,12 @@ def user_profile(u_id):
     for trail in unique_visited:
         place = geocoder.google(str(trail))
         place_lat = str(place.lat)
-        place_lng = str(place.lng)     
+        place_lng = str(place.lng)  
+        # geolocator = Nominatim()
+        # location = geolocator.geocode(trail)
+        # place_lat = location.latitude
+        # place_lng = location.longitude  
+         
         list_lat.append(float(place_lat))
         list_lng.append(float(place_lng))
 
