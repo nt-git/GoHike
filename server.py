@@ -372,7 +372,7 @@ if __name__ == "__main__":
     connect_to_db(app, "hiking")
 
     # Use the DebugToolbar
-    DebugToolbarExtension(app)
-    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+    # DebugToolbarExtension(app)
+    # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
     app.run(port=5000, host='0.0.0.0')
