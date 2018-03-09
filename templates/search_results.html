@@ -13,16 +13,7 @@
         width: 400px;
       }
 
-     /* body {
-     margin: 0;
-     padding: 0;
-     background: url("/static/images/pexels-photo-519403.jpeg");
-     background-size: cover;
-     background-repeat: no-repeat;
-     background-attachment: fixed;
-     font-family: sans-serif;
-
-   }*/
+    
    th {
     font-size: 17px;
     color: #f05b24 ;
@@ -31,19 +22,19 @@
     </style>
   </head>
  <body>
+
 <!-- Create a div for every Trail using a Jinja for loop -->
 <h3><center>{{user.name}}, Here are all the trails we found for you!</center></h3> 
 
 <div class="row">
-<div class="col-xs-8">
-<div class='trail-div'>
+  <div class="col-xs-8">
+    <div class='trail-div'>
 
     <div class="container-fluid">
             <table class="table table-hover">
                 <tr>
                     <th>Trail Name</th>
                     <th>Plan Hike</th> 
-                    <!-- <th>Trail URL</th> -->
                     <th >Location</th>
                     <th>Trail Summary</th>
                     <th>Trail Image</th>
@@ -62,25 +53,24 @@
             Enter Date: <input type="date" name="date" id="date-time">
         </span></td>
         
-        <!-- <td><a href= "">{{ num_results[i].get('url') }}</td> -->
         <td>{{ num_results[i].get('location') }} </td>
         <td>{{ num_results[i].get('summary') }} </td>
        <td><img src="{{ num_results[i].get('imgSqSmall') }}" ></td>
 
-    </tr>
+      </tr>
     {% endfor %}
 
-    </table>
-</div>
-</div> 
+      </table>
+    </div>
+  </div> 
 </div>
 
+<!-- Create a div for Map -->
 <div class="col-xs-4"> 
-
-    <div id="map"></div> </div>
-
-
+   <div id="map"></div> </div>
 </div>
+
+
     <script>
       var marker;
       function initMap() {
@@ -142,36 +132,5 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="/static/js/search_results.js"></script>
 
- <!--  // "use strict";
-
-  // function showInfo(results){
-  //   console.log(results.trail_id)
-    
-  // }
-
-  // function getInfo(evt){
-  //   evt.preventDefault();
-
-  //   let datevalue = $(this).next().val()
-    
-  //   var formInputs = {
-  //       "trail_id": $(this).data('tooltip'),
-  //       "date": datevalue,
-  //       "name": $(this).data('name'),
-  //       "url" : $(this).data('url'),
-  //       "length": $(this).data('length'),
-  //       "type" : $(this).data('type'),
-  //       "stars": $(this).data('stars')
-  //   };
-
-    
-  //   $.post("/get-trails-info",formInputs, showInfo);
-  // }
-
-  // $("#hike-it ").on('click', getInfo);
-
-
- -->
-
-
+ 
 {% endblock %}
