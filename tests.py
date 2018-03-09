@@ -12,22 +12,30 @@ class HikeTests(unittest.TestCase):
         app.config['TESTING'] = True
 
     def test_homepage(self):
+        """Test Homepage"""
+        
         result = self.client.get("/")
         self.assertIn("nearby Trails", result.data)
 
     def test_no_signin_yet(self):
+        """Test Homepage before Sign In"""
+
         result = self.client.get("/")
         self.assertIn("SignIn", result.data)
         self.assertNotIn("Logout", result.data)
 
     
     def test_signin_yet(self):
+        """Test Sign In Page"""
+
         result = self.client.get("/SignIn")
         self.assertIn("SignIn", result.data)
         self.assertNotIn("Logout", result.data)
 
 
     def test_no_signup_yet(self):
+        """Test Sign Up page"""
+
         result = self.client.get("/SignUp")
         self.assertIn("SignUp", result.data)
         self.assertNotIn("Logout", result.data)
@@ -62,19 +70,24 @@ class HikeTestsDatabase(unittest.TestCase):
         db.drop_all()
 
     def test_search(self):
-        #search without signin in
+        """Test Search Page"""
+
         result = self.client.get("/search")
         self.assertIn("Enter", result.data)
         self.assertNotIn("Signed In", result.data)
 
 
     def test_user_profile(self):
+        """Test User Profile"""
+
         #FIXME: test that the user page displays the user from example_data()
         result = self.client.get("/users/1")
         self.assertIn("Test", result.data)
         self.assertNotIn("Test3", result.data)
 
     def test_signin(self):
+        """Test Sign In """
+
         result = self.client.post("/SignIn",
                                 data={"email": "fun@hb.com",
                                       "password": "1234"},
@@ -83,6 +96,8 @@ class HikeTestsDatabase(unittest.TestCase):
         self.assertIn("Test", result.data)
 
     def test_signup(self):
+        """Test Sign Up"""
+
         result = self.client.post("/SignUp",
                               data={"name": "unittest",
                                     "email": "unittest@hb.com",
@@ -94,6 +109,8 @@ class HikeTestsDatabase(unittest.TestCase):
         self.assertIn("Search", result.data)
 
     def test_search_zipcode(self):
+        """Test Search by Zipcode"""
+
         result = self.client.post("/search",
                               data={"zipcode": "94102"
                                     },
@@ -102,6 +119,8 @@ class HikeTestsDatabase(unittest.TestCase):
         self.assertIn("URL", result.data)
 
     def test_search_location(self):
+        """Test Search by Location"""
+
         result = self.client.post("/search",
                               data={"location": "Fremont"
                                     },
@@ -111,6 +130,8 @@ class HikeTestsDatabase(unittest.TestCase):
 
 
     def test_get_trail_info(self):
+        """Test Trail Info"""
+
         result = self.client.post("/get-trails-info",
                                 data={"trail_id": "1",
                                       "date": "2018-02-24",
@@ -125,6 +146,8 @@ class HikeTestsDatabase(unittest.TestCase):
         self.assertEqual(result_json_data['trail_id'],"1")
 
     def test_get_comment_info(self):
+        """Test commenting"""
+
         result = self.client.post("/add-trails-comment",
                                 data={"trail_id": "1",
                                       "comments": "abcd",
@@ -136,6 +159,7 @@ class HikeTestsDatabase(unittest.TestCase):
 
 
     def test_get_rating_info(self):
+        """Test Rating"""
         result = self.client.post("/add-rating",
                                 data={"hike_id": "1",
                                       "u_rating": "2.5"
@@ -146,6 +170,8 @@ class HikeTestsDatabase(unittest.TestCase):
         self.assertEqual(result_json_data['hike_id'],"1")
 
     def test_send_email(self):
+        """Test Recommend"""
+
         result = self.client.post("/send-email",
                                 data={"trail_name": "test trail",
                                     "trail_url": "test trail",
