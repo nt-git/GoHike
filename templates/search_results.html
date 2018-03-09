@@ -140,37 +140,38 @@
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script>
-  "use strict";
+<script src="/static/js/search_results.js"></script>
 
-  function showInfo(results){
-    console.log(results.trail_id)
+ <!--  // "use strict";
+
+  // function showInfo(results){
+  //   console.log(results.trail_id)
     
-  }
+  // }
 
-  function getInfo(evt){
-    evt.preventDefault();
+  // function getInfo(evt){
+  //   evt.preventDefault();
 
-    let datevalue = $(this).next().val()
+  //   let datevalue = $(this).next().val()
     
-    var formInputs = {
-        "trail_id": $(this).data('tooltip'),
-        "date": datevalue,
-        "name": $(this).data('name'),
-        "url" : $(this).data('url'),
-        "length": $(this).data('length'),
-        "type" : $(this).data('type'),
-        "stars": $(this).data('stars')
-    };
+  //   var formInputs = {
+  //       "trail_id": $(this).data('tooltip'),
+  //       "date": datevalue,
+  //       "name": $(this).data('name'),
+  //       "url" : $(this).data('url'),
+  //       "length": $(this).data('length'),
+  //       "type" : $(this).data('type'),
+  //       "stars": $(this).data('stars')
+  //   };
 
     
-    $.post("/get-trails-info",formInputs, showInfo);
-  }
+  //   $.post("/get-trails-info",formInputs, showInfo);
+  // }
 
-  $("#hike-it ").on('click', getInfo);
+  // $("#hike-it ").on('click', getInfo);
 
 
-</script>
+ -->
 
 
 {% endblock %}

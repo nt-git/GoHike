@@ -18,6 +18,11 @@
 
 }
 
+.navbar-default {
+    border: none;
+    border-radius: 0px;
+}
+
 #bs-example-navbar-collapse-1 > ul.nav.navbar-nav.navbar-right > a:hover {
     color:white;
     padding-top: 15px;
@@ -41,3 +46,4 @@
 h1, h2, h3, h4, h5, h6 {
     font-family: "Palatino", serif;
 }
+
