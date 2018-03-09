@@ -13,7 +13,7 @@ class HikeTests(unittest.TestCase):
 
     def test_homepage(self):
         """Test Homepage"""
-        
+
         result = self.client.get("/")
         self.assertIn("nearby Trails", result.data)
 
@@ -171,6 +171,7 @@ class HikeTestsDatabase(unittest.TestCase):
 
     def test_send_email(self):
         """Test Recommend"""
+        #TODO - Need to make sure email is being sent as well,
 
         result = self.client.post("/send-email",
                                 data={"trail_name": "test trail",
