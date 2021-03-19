@@ -11,7 +11,7 @@ geocoder==1.35.0
 haversine==0.4.5
 idna==2.6
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.11.3
 MarkupSafe==1.0
 pkg-resources==0.0.0
 psycopg2==2.7.3.2
